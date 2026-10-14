@@ -1,7 +1,7 @@
 # Design — fork do openGym com APK próprio + app para Galaxy Watch
 
 > Spec `fork-watch` · Fase 2 (Design) · Base: upstream v1.4.1 · Requisitos: `requirements.md` (aprovado)
-> Status: **rascunho, aguardando aprovação**
+> Status: **aprovado em 2026-10-13**
 
 Referências de requisito aparecem como `[RB-2.1]`, `[RS-2.1]` etc. Decisões aprovadas aparecem como `[D-n]`.
 
