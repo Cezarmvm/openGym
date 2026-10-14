@@ -1,7 +1,7 @@
 # Tarefas — fork do openGym com APK próprio + app para Galaxy Watch
 
 > Spec `fork-watch` · Fase 3 (Tarefas) · Requisitos e design aprovados em 2026-10-13
-> Status: R1 aprovada em 2026-10-13 · **M2–M5 reescritos na Revisão 2 (2026-10-14), aguardando aprovação**
+> Status: R1 aprovada em 2026-10-13 · **M2–M5 reescritos na Revisão 2, aprovada em 2026-10-14**
 
 ## Como ler
 

@@ -1,7 +1,7 @@
 # Design — fork do openGym com APK próprio + app para Galaxy Watch
 
 > Spec `fork-watch` · Fase 2 (Design) · **Revisão 2** · Requisitos: `requirements.md` (revisão 2)
-> Status: R1 aprovada em 2026-10-13 · **R2 aguardando aprovação** (2026-10-14)
+> Status: R1 aprovada em 2026-10-13 · **R2 aprovada em 2026-10-14** (D-11: opção a)
 
 Referências de requisito aparecem como `[RB-2.1]`, `[RS-2.1]` etc. Decisões aprovadas aparecem como `[D-n]`.
 
@@ -524,7 +524,7 @@ estiver aberto. A escolha fica para o M5.
 
 Recomendação: **(a)**. O treino acontece no relógio, e esperar o lançamento deixaria o app do
 relógio sem uso por tempo indefinido. O risco é controlado com backup, testes e upgrade
-conferido. A decisão é do dono, na aprovação desta revisão.
+conferido. **Decisão do dono (2026-10-14): (a).**
 
 ### 14.2 Rotina de merge
 1. `git fetch upstream`. `git merge` (nunca rebase) do branch escolhido no D-11 ou da tag nova.

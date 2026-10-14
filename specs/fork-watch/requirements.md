@@ -1,7 +1,7 @@
 # Requisitos — fork do openGym com APK próprio + app para Galaxy Watch
 
 > Spec `fork-watch` · Fase 1 (Especificação) · Base: upstream openGym v1.4.1 (`versionCode 26`)
-> Status: R1 aprovada em 2026-10-13 · **Revisão 2 (2026-10-14) aguardando aprovação**
+> Status: R1 aprovada em 2026-10-13 · **Revisão 2 aprovada em 2026-10-14**
 
 > **Revisão 2.** O spike M2.1 mostrou que o JS do celular não roda com o celular bloqueado, nem com
 > foreground service (`FORK.md`). O relógio passa a conduzir o treino sozinho, e o celular aplica o
@@ -405,5 +405,5 @@ Aprovadas pelo dono em 2026-10-13, com as recomendações do assistente.
 | D-8 | `applicationId` | `com.cezar.opengym` (release) e `com.cezar.opengym.test` (debug), iguais no celular e no relógio. |
 | D-9 | Specs públicos | Sim, no fork público `Cezarmvm/openGym`. |
 | D-10 | Nome visível do app | "openGym", sem sufixo (decisão do dono em 2026-10-14). O fork se distingue do oficial só pelo `applicationId`. |
-| D-11 | Como o JS do relógio do upstream entra no fork (R2) | **Pendente.** (a) `merge` do branch `upstream/watch` no `fork/main` agora (recomendado) ou (b) um branch de integração até o upstream lançar. Ver `design.md` §14.1. |
+| D-11 | Como o JS do relógio do upstream entra no fork (R2) | **(a)**: `merge` do branch `upstream/watch` no `fork/main` agora. O fork segue esse branch até ele entrar no `upstream/main` (decisão do dono em 2026-10-14). Ver `design.md` §14.1. |
 | D-12 | Formato da sincronização (R2) | O do upstream (Apple Watch): relógio autônomo, eventos `setDone`/`finish`/`start`, fila durável aplicada quando o celular abre. Decisão do dono em 2026-10-14, depois do spike M2.1. |
