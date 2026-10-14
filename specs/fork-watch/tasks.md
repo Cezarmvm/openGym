@@ -68,7 +68,7 @@ Termina com: APK `com.cezar.opengym` assinado com a chave do dono, instalado no 
   - Aceite: em português. Cobre: keystore (criação, backup, `keystore.properties`), exportar o backup JSON do oficial e importar no fork, importar o CSV do Hevy (opcional), fontes desconhecidas, aviso do Play Protect, depuração USB, bateria "Sem restrições" (Samsung) e os erros `INSTALL_FAILED_UPDATE_INCOMPATIBLE`, `INSTALL_FAILED_VERSION_DOWNGRADE` e "app não instalado". As seções do relógio ficam como esqueleto, preenchidas no M2/M3.
   - Req: RB-8.1, design §6 (Samsung)
 
-- [ ] **M1.11 — Release N e N+1 + checklist manual M1**
+- [x] **M1.11 — Release N e N+1 + checklist manual M1**
   - Arquivos: nenhum (execução), `FORK.md` (registro)
   - Aceite: `fork-release --install` gera e instala a versão N. O dono importa o backup e cria um dado. Uma segunda execução gera N+1, e `adb install -r` instala por cima sem desinstalar. Os dados continuam lá. O app oficial (se instalado) continua intacto ao lado.
   - Req: RB-1.2, RB-7.1, RB-7.2, RT-4
