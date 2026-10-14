@@ -19,7 +19,7 @@ beforeEach(() => {
     readSince: async a => { calls.push(['read', a]); return plugin.data },
   }
   h = createHealthRead({
-    plugin: async () => plugin,
+    plugin: async () => ({ p: plugin }),
     readJson: async n => (files.has(n) ? JSON.parse(files.get(n)) : null),
     writeJson: async (n, o) => { files.set(n, JSON.stringify(o)) },
     update: fn => fn(S),
@@ -79,5 +79,14 @@ describe('later reads', () => {
     await h.read()
     expect(calls.length).toBe(n)
     expect(S.bodyweight).toHaveLength(2)
+  })
+})
+
+describe('a Capacitor plugin proxy', () => {
+  it('works although it answers `then` (it travels wrapped)', async () => {
+    plugin.then = () => {}   // what a registerPlugin proxy does: every property is a method
+    const r = await Promise.race([h.enable(), new Promise(res => setTimeout(() => res('hung'), 500))])
+    expect(r).not.toBe('hung')
+    expect(r.ok).toBe(true)
   })
 })

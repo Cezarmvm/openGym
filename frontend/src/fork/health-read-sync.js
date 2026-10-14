@@ -12,7 +12,10 @@ const OFF = { on: false, kinds: { weight: true, bodyFat: true }, lastRead: 0, la
 
 /**
  * Everything with side effects is injected, so the tests play the plugin and the files in memory.
- * deps: { plugin: () => Promise<plugin|null>, readJson(name), writeJson(name, obj), update(fn), getState(), now() }
+ * deps: { plugin: () => Promise<{ p }|null>, readJson(name), writeJson(name, obj), update(fn), getState(), now() }
+ *
+ * The plugin always travels wrapped in { p }: a Capacitor plugin proxy answers `then`, so a promise
+ * resolved with the bare proxy never settles (the same trap lib/rest-alert.js and health-sync.js avoid).
  */
 export function createHealthRead(deps) {
   const now = deps.now || Date.now
@@ -37,7 +40,7 @@ export function createHealthRead(deps) {
     running = (async () => {
       const st = await load()
       if (!st.on) return st
-      const p = await deps.plugin()
+      const p = (await deps.plugin())?.p   // never returned from an async function: see above
       if (!p) return st
       const kinds = wanted(st)
       if (!kinds.length) return st
@@ -67,7 +70,7 @@ export function createHealthRead(deps) {
 
   /** Turning it on: asks for the read permissions (and the history), then reads once. */
   async function enable(kinds = OFF.kinds) {
-    const p = await deps.plugin()
+    const p = (await deps.plugin())?.p   // never returned from an async function: see above
     if (!p) return { ok: false, reason: 'unsupported' }
     const s = await p.status().catch(() => ({ status: 'unsupported' }))
     if (s.status !== 'available') return { ok: false, reason: s.status }
@@ -108,7 +111,7 @@ export async function healthRead() {
       if (!(await isAndroid())) return null
       const { registerPlugin } = await import('@capacitor/core')
       return { p: registerPlugin('HealthRead') }
-    })().catch(() => null))).then(x => x?.p || null),
+    })().catch(() => null))),
     readJson: readJsonFile,
     writeJson: writeJsonFile,
     update: fn => useStore.getState().update(fn, true),
