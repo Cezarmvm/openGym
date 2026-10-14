@@ -1,5 +1,36 @@
 # Changelog
 
+## Unreleased
+
+**Security.** Five private reports, all fixed, plus our own audit. Thanks to Boris Kurktchiev
+for the reports, each with a patch and a test. Self-hosters: please update.
+
+- **A crafted link could send your sign-in to another server** (GHSA-375x-wfvj-jf7q). A link to
+  your own instance with an odd path made the app talk to a host named in that path. It can't
+  leave your instance any more.
+- **Another site could sign you into its account** (GHSA-48ff-v63h-99xr). The passkey sign-in
+  routes now check where a request comes from like every other route, and the API only takes JSON.
+- **Push notifications could be taken over** by someone who knew your device's push address
+  (GHSA-568g-hg5j-h53q). The address now only moves to another account with its own keys.
+- **The Coach's sandbox check was skipped** on the admin's test button, the status card and jobs
+  queued before a provider switch (GHSA-w724-p4hx-jfv9).
+- **One profile could slow the server down for everyone** with a huge queue (GHSA-69j8-85pp-mf8j),
+  or with many accounts and large saved states. The reminder check now reads a state only when a
+  reminder could actually go out.
+- Rest timers and test pushes are limited per account, disabled accounts get no reminders and no
+  Coach reviews, and signing up with someone's e-mail as the name counts against your address
+  like the e-mail field does.
+- A browser's sign-in cookie can no longer be turned into a phone token that renews forever.
+- The Coach forgets a stored API key when its server address moves to another host. Enter it again.
+- Request paths the server would have to tidy up (`..`, backslashes) are refused, nginx stops
+  naming its version, and Android backups no longer include the paired server's sign-in.
+- **One owner, many admins.** Any admin could delete every other admin and then clear the activity
+  log. Now one admin is the owner: only they make or remove admins, delete an admin, clear the log
+  or hand the role on (Admin, tap a user). Existing instances: the oldest admin is the owner.
+- **The web container sends a real Content-Security-Policy.** Scripts only run from your own
+  instance, so an injected one does nothing. If your proxy adds analytics, see
+  `CONTENT_SECURITY_POLICY` in docs/SELF_HOSTING.md.
+
 ## v1.4.1 (2026-10-10)
 
 Bug fixes for v1.4.0, mostly the things you told us about on Discord and GitHub.

@@ -55,7 +55,7 @@ async function startServer(t, subs = []) {
 test('subscribe refuses every spelling of a private IP literal and accepts public ones', async t => {
   const h = await startServer(t);
   const subscribe = endpoint => fetch(`${h.api}/api/push/subscribe`, {
-    method: 'POST', headers: cookie, body: JSON.stringify({ subscription: { endpoint, keys } })
+    method: 'POST', headers: { ...cookie, 'Content-Type': 'application/json' }, body: JSON.stringify({ subscription: { endpoint, keys } })
   });
   const privateForms = [
     'https://[::ffff:127.0.0.1]/x',          // mapped loopback, dotted
