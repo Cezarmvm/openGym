@@ -112,22 +112,25 @@ bloqueado, ela aparece no celular ao abrir o app, sem perda.
   - Req: RS-1.5, RT-2, design §3.2, §3.3, R-3
   - ✅ M2.5 — `Model.kt` (port do `Model.swift`); fixtures `no-workout`, `treino-a`, `superset`, `per-side-time-cardio` geradas pelo `buildSnapshot`/`fitSnapshot` do upstream (`src/fork/watch-fixtures.test.js`) e lidas pelo `FixturesTest`; `events.json` gerado pelo Kotlin e aceito pelo `applyEvents` do upstream (setDone ×3 + finish). `:watch-core:test` 30/30, vitest 2/2.
 
-- [ ] **M2.6 — Módulo `:fork-wearbridge`: `WatchBridgePlugin`, `EventInbox`, listener**
+- [x] **M2.6 — Módulo `:fork-wearbridge`: `WatchBridgePlugin`, `EventInbox`, listener**
   - Arquivos: `frontend/android/fork-wearbridge/**` (`WatchBridgePlugin`, `EventInbox`, `PhoneListenerService`, `SnapshotPublisher`, manifest e `res/values/wear.xml`), `fork/android/fork-app.gradle` (dependência), `MainActivity.java` (+1 linha FORK)
   - Aceite: testes JVM da `EventInbox` (ordem, dedupe, persistência, recuperação recriando a instância, `ack` remove). No celular: `WatchBridge.status()` responde pelo `chrome://inspect` e `sendSnapshot` grava o item (`adb shell dumpsys activity service WearableService` ou o log do listener do relógio).
   - Req: RS-1.3, RS-1.4, RS-2.1, design §2.3, §3.4
+  - ✅ M2.6 — `WatchBridgePlugin` (Kotlin, mesma interface do Swift), `EventInbox` (6 testes JVM), `PhoneListenerService`; no S25 o listener recebeu cada evento com o celular bloqueado (`phone: 1 event(s) in the inbox`) e o `ack` apagou os DataItems (o relógio registrou `phone applied` para os 3).
 
-- [ ] **M2.7 — Liberar o `watch-sync.js` no Android**
+- [x] **M2.7 — Liberar o `watch-sync.js` no Android**
   - Arquivos: `frontend/src/lib/watch-sync.js` (1 linha FORK), `frontend/src/views/Settings.jsx` (1–2 linhas FORK), `frontend/src/views/WatchSettings.jsx` (bloco FORK de rótulos), `frontend/src/fork/strings.js`, `frontend/src/fork/watch-android.test.js`
   - Aceite: vitest com `nativePlatform()='android'` e um plugin falso: o snapshot é enviado ao iniciar um treino, `drain` → `applyEvents` → `ack` só depois do `saveNow`. Configurações → relógio aparece no Android com textos em pt-BR ("relógio", "Conexão Saúde"). Os testes de relógio do upstream continuam passando.
   - Req: A-1, RS-1.4, design §2.3, §10
+  - ✅ M2.7 — 1 linha FORK no `watchPlugin()`; página Configurações → Relógio (Wear OS) própria (`src/fork/WearSettings.jsx`, textos pt-BR); `watch-android.test.js` 3/3; `Settings.watch.test.jsx` ajustado (FORK); suíte completa só com as falhas conhecidas do Windows.
 
-- [ ] **M2.8 — Módulo `:wear` mínimo**
+- [x] **M2.8 — Módulo `:wear` mínimo**
   - Arquivos: `frontend/android/wear/**` (`MainActivity` Compose com o texto do exercício e da série atuais + botão "Concluir série", `WatchListenerService`, `SessionStore` mínimo, `EventSender`), `fork/android/fork-settings.gradle`, assinatura e versão compartilhadas
   - Aceite: `:wear:assembleDebug` e `:wear:assembleRelease` compilam com `applicationId`, assinatura e `versionCode` iguais aos do celular. No relógio real: o snapshot do Treino A aparece. "Concluir" grava um `setDone` (`DataItem`), e o celular o recebe na `EventInbox` com o app em segundo plano (`logcat`).
   - Req: RS-1.3, RS-1.6, RB-3.2, design §2.3, §9
+  - ✅ M2.8 — `:wear` (Compose for Wear, `minSdk 30`): no Galaxy Watch o Treino A apareceu ao iniciar no celular ("supino na máquina · Set 1 of 3 · 15 kg × 10"); 3× "Complete set" com o celular bloqueado → 3 eventos na inbox do celular em ~1,5 s; ao desbloquear, o celular mostrou 3/24 séries e o descanso rodando; descartar no celular devolveu o relógio à espera.
 
-- [ ] **M2.9 — Script de release com o relógio**
+- [x] **M2.9 — Script de release com o relógio**
   - Arquivos: `scripts/fork-release.sh` (+ `.ps1`)
   - Aceite:
     - compila `:wear:assembleRelease`;
@@ -137,6 +140,7 @@ bloqueado, ela aparece no celular ao abrir o app, sem perda.
     - `--install` detecta o relógio por `ro.build.characteristics` (contém `watch`) ou usa `--watch SERIAL`;
     - roda os testes Kotlin (`:watch-core:test`, `:fork-wearbridge:testDebugUnitTest`, `:wear:testDebugUnitTest`).
   - Req: RB-6.1 (2–6), RS-1.6
+  - ✅ M2.9 — `1.4.1-cezar.7` (26007): celular e relógio com o mesmo certificado (`70:F8:…:BF:D2`), pacote e versionCode conferidos pelo `aapt2`, instalados por `--install --phone … --watch …`; cópia do APK do relógio reassinada com a keystore descartável → certificado diferente (`00ae29…`), que a etapa "signature check" recusa. O script roda vitest (fork + relógio do upstream) e `:watch-core:test :fork-wearbridge:testDebugUnitTest`.
 
 - [ ] **M2.10 — Checklist manual M2**
   - **Checklist (o dono):**

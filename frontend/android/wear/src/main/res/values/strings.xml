@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name" translatable="false">openGym</string>
+    <string name="no_workout">No workout running.\nStart one on the phone.</string>
+    <string name="update_app">Update the watch app</string>
+    <string name="set_of">Set %1$d of %2$d</string>
+    <string name="warmup">Warm-up</string>
+    <string name="complete_set">Complete set</string>
+    <string name="all_done">All sets done</string>
+    <string name="finish">Finish</string>
+</resources>

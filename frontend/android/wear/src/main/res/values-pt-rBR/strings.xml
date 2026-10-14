@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="no_workout">Nenhum treino ativo.\nInicie pelo celular.</string>
+    <string name="update_app">Atualize o app do relógio</string>
+    <string name="set_of">Série %1$d de %2$d</string>
+    <string name="warmup">Aquecimento</string>
+    <string name="complete_set">Concluir série</string>
+    <string name="all_done">Todas as séries feitas</string>
+    <string name="finish">Finalizar</string>
+</resources>

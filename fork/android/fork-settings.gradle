@@ -3,4 +3,4 @@
 include ':fork-health'          // specs/fork-health: reading back from Health Connect
 include ':watch-core'           // specs/fork-watch R2: the watch's session (port of upstream's WatchCore)
 include ':fork-wearbridge'      // specs/fork-watch R2: WatchBridge plugin over the Data Layer
-// specs/fork-watch M2 adds :wear here.
+include ':wear'                 // specs/fork-watch R2: the Wear OS watch app

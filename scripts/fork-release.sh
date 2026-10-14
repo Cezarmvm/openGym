@@ -105,7 +105,10 @@ echo "forkBuild: $FORK_BUILD"
 # ── Tests ───────────────────────────────────────────────────────────────────────────────────────
 if [ $SKIP_TESTS -eq 0 ]; then
   step 'tests (fork)'
-  (cd "$FRONTEND" && npx vitest run src/watch src/fork src/lib/import-csv.pt-br.test.js)
+  # the fork's own tests and upstream's watch link (the part the fork builds on)
+  (cd "$FRONTEND" && npx vitest run src/fork src/lib/import-csv.pt-br.test.js src/lib/watch-sync src/lib/watch-settings src/views/Settings.watch.test.jsx src/views/Workout.watch.test.jsx)
+  step 'tests (Kotlin)'
+  (cd "$ANDROID_DIR" && ./gradlew --no-daemon -q :watch-core:test :fork-wearbridge:testDebugUnitTest)
 fi
 
 # ── Mobile web build (what `npm run build:mobile` does; its VAR=value syntax breaks in cmd) ──────

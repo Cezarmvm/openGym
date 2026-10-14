@@ -38,4 +38,5 @@ def forkCheckSigning = tasks.register('forkCheckSigning') {
         }
     }
 }
-tasks.matching { it.name == 'preReleaseBuild' }.configureEach { dependsOn forkCheckSigning }
+// preReleaseBuild, or pre<Flavor>ReleaseBuild once upstream has flavors (sideload/play).
+tasks.matching { it.name.startsWith('pre') && it.name.endsWith('ReleaseBuild') }.configureEach { dependsOn forkCheckSigning }
