@@ -24,6 +24,9 @@ Toda mudança em arquivo do upstream é marcada com `FORK:` no comentário. Para
 | `frontend/src/lib/import-csv.js` | `parseWhen` aceita "de" entre dia, mês e ano ("4 de mar. de 2026"), formato do Hevy em português/espanhol. Teste: `import-csv.pt-br.test.js` | manter o `(?:de\s+)?` na regex dia-mês-ano |
 | `frontend/src/lib/health-sync.js` | Health Connect recebe só os treinos iniciados depois de ligar a opção (`since` no `opengym-health.json`; filtro em `src/fork/health-since.js`). 3 linhas marcadas | reaplicar `onlySince(...)` no `planSync` do `syncOnce` e o `since` no `enableHealth` |
 | `frontend/src/lib/health-sync.test.js` | relógio dos testes fixado antes dos treinos de exemplo, para manter os casos do upstream | manter as 2 linhas FORK no `beforeEach` |
+| `frontend/android/app/src/main/java/ch/duartesantos/opengym/MainActivity.java` | `registerPlugin(HealthReadPlugin.class)` (fork-health) | manter a linha FORK após os `registerPlugin` do upstream |
+| `frontend/src/main.jsx` | `initHealthRead()` no MOBILE (fork-health) | manter a linha FORK |
+| `frontend/src/views/Settings.jsx` | import + `<HealthReadCard/>` abaixo do `HealthConnectCard` (fork-health) | manter as 2 linhas FORK |
 
 ## Build do fork (Gradle)
 

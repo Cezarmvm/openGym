@@ -23,7 +23,7 @@
   - Aceite: com o plugin falso, primeira leitura com `since=0`, depois incremental com margem de 1 dia, nada quando desligado, erro de permissão registrado sem quebrar o app.
   - Req: HR-1.1, HR-3.3, HR-3.4
 
-- [ ] **H5: Card "Ler do Conexão Saúde" no Settings**
+- [x] **H5: Card "Ler do Conexão Saúde" no Settings**
   - Arquivos: `frontend/src/fork/HealthReadCard.jsx`, `frontend/src/fork/strings.js`, `frontend/src/views/Settings.jsx` (+1 linha FORK)
   - Aceite: liga e desliga, pede as permissões, mostra a última leitura e a contagem. Teste de componente (happy-dom) no estilo dos `sheets.*.test.jsx`.
   - Req: HR-3
