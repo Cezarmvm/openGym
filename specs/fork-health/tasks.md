@@ -1,6 +1,6 @@
 # Tarefas: Health Connect nos dois sentidos
 
-> Spec `fork-health` · Fase 3 · Status: **rascunho, aguardando aprovação**
+> Spec `fork-health` · Fase 3 · Status: **aprovado em 2026-10-14**
 > Mesmas regras do `specs/fork-watch/tasks.md`: teste → `[x]` → commit → `✅ tarefa — verificação`.
 
 - [x] **H1: Gravar só treinos novos no Health Connect**
@@ -13,7 +13,7 @@
   - Aceite: compila. `status`, `requestPermissions`, `readSince` e `heartRate` respondem no S25 (log via `chrome://inspect` não existe em release: verificar com um build debug `.test`). Permissões de leitura aparecem na tela do Health Connect.
   - Req: HR-3.2, design §2
 
-- [ ] **H3: Mescla pura (`fork/health-read.js`) + testes**
+- [x] **H3: Mescla pura (`fork/health-read.js`) + testes**
   - Arquivos: `frontend/src/fork/health-read.{js,test.js}`
   - Aceite: todos os casos do design §6 (vitest) verdes.
   - Req: HR-1, HR-2, HQ-1
