@@ -174,17 +174,19 @@ descanso com vibração, finalizar com resumo), com o celular no bolso.
   - Req: RW-1.2, RW-1.3, RW-3.1, RW-4.1, RO-1.4, RO-1.5, RO-1.7, design §5.1
   - ✅ M3.1 (adiantada junto com o M2.5) — `SessionCore.kt` função a função; `SessionCoreTest` (11, inclui os 9 do Swift), `SetTypesTest` (10) e `SettingsAndWeighInTest` (3) passando.
 
-- [ ] **M3.2 — `SessionStore` completo + `EventSender`**
+- [x] **M3.2 — `SessionStore` completo + `EventSender`**
   - Arquivos: `wear/.../data/SessionStore.kt`, `EventSender.kt`, testes JVM
   - Aceite: o estado é salvo em arquivo a cada mudança e restaurado ao abrir. Snapshot novo → `applySnapshot` mantém os pendentes. Cada evento vira um `DataItem` com id único. Um item apagado pelo celular confirma o evento. Teste: "app morto no meio do treino → reabre no mesmo ponto".
   - Req: RO-1.1, RO-1.6, RS-3.1, design §2.3, §7
+  - ✅ M3.2 — `SessionStore` com `StateFile` (escrita atômica; `StateFileTest`: app morto no meio do treino volta no mesmo ponto, com o tick pendente), eventos como DataItems, resumo ao finalizar aqui ou no celular. No relógio: com o Bluetooth do celular desligado, o snapshot e o evento passaram pela sincronização em nuvem da Data Layer.
 
-- [ ] **M3.3 — Base da UI: tema, pager, estados**
+- [x] **M3.3 — Base da UI: tema, pager, estados**
   - Arquivos: `wear/.../ui/App.kt`, `ui/theme/*`, `res/values{,-pt-rBR}/strings.xml` (aproveitando o `pt-BR.lproj/Localizable.strings` do upstream)
   - Aceite: pager Série / Descanso / Lista / Finalizar; "Nenhum treino ativo"; "Atualize o app" para `v` ≠ 1; indicador "sem conexão". Idioma pelo `settings.lang`. Previews Compose de cada estado.
   - Req: RW-1.5, RS-1.5, RO-1.2, design §8
+  - ✅ M3.3 — `HorizontalPager` de 4 páginas, "Nenhum treino ativo", "Atualize o app", "sem conexão" / "N a enviar"; textos en + pt-BR seguindo o `settings.lang` do app (o relógio em inglês mostrou tudo em português).
 
-- [ ] **M3.4 — Página Série + bezel**
+- [x] **M3.4 — Página Série + bezel**
   - Arquivos: `wear/.../ui/SetPage.kt`, `ui/Rotary.kt`
   - Aceite:
     - mostra nome, superset, "Série X de Y"/"Aquec.", carga e reps;
@@ -196,8 +198,9 @@ descanso com vibração, finalizar com resumo), com o celular no bolso.
     - números ≥ 32 sp;
     - conferido no relógio.
   - Req: RW-1.1, RW-1.3, RW-1.4, RW-2.1–2.3, RW-3.1, RW-4.1, D-5, D-7, design §8, §8.1
+  - ✅ M3.4 — no relógio: "supino na máquina · Série 1 de 3 · 15 kg / 10 reps"; 3 cliques de bezel em reps → 13, toque em carga e 2 cliques → 20 kg (passo 2,5 do celular); Concluir → evento aplicado no celular. Um clique = um passo (o primeiro build dava ~3 por clique simulado). Pular série = segurar Concluir. Lados E/D, tempo e cardio cobertos pelo `SessionCore`/fixtures; superset ainda sem teste no aparelho (M3.7).
 
-- [ ] **M3.5 — Descanso: página, timer local e vibração**
+- [x] **M3.5 — Descanso: página, timer local e vibração**
   - Arquivos: `wear/.../ui/RestPage.kt`, `wear/.../rest/RestTimer.kt`, `RestAlarmReceiver.kt`, manifest (`USE_EXACT_ALARM`, `SCHEDULE_EXACT_ALARM`, `VIBRATE`)
   - Aceite:
     - arco e tempo restante;
@@ -208,14 +211,16 @@ descanso com vibração, finalizar com resumo), com o celular no bolso.
     - vibra 300-150-300 no fim com a tela apagada, se `restHaptics`;
     - testes JVM com relógio falso.
   - Req: RW-3.2–3.5, RO-1.3, design §5.3
+  - ✅ M3.5 — após Concluir, o pager foi sozinho para DESCANSO 1:27 com o anel, "Próximo: … série 2 · 15 kg × 10" e −15s/Pular/+15s; `RestClockTest` (4) e `ValuesTest` (3); alarme exato (`USE_EXACT_ALARM`) com vibração 300-150-300 se `restHaptics`. A vibração com a tela apagada fica para o teste real (M3.7).
 
-- [ ] **M3.6 — Página Lista e página Finalizar + resumo**
+- [x] **M3.6 — Página Lista e página Finalizar + resumo**
   - Arquivos: `wear/.../ui/ListPage.kt`, `FinishPage.kt`, `SummaryPage.kt`
   - Aceite:
     - **Lista:** nome, feitas/total, ✓, o atual destacado; tocar troca o exercício do relógio.
     - **Finalizar:** segurar 1,5 s; soltar antes não envia nada; envia `finish` e mostra o resumo (duração, séries, PRs); sem "Descartar".
     - Snapshot sem o treino (finalizado no celular) → resumo "finalizado no celular" e depois a espera.
   - Req: RW-4.2, RW-5.1–5.4
+  - ✅ M3.6 — Lista ("Treino A · 1 de 24 séries", atual destacado, 1/3 · 0/3…), Finalizar (1/24 séries, duração, segurar 1,5 s com anel). Descartar no celular → relógio mostrou "Encerrado no celular · 1 série · 5:20 · 260 kg". O "segurar para finalizar" não foi testado pelo assistente para não gravar um treino falso no histórico (M3.7).
 
 - [ ] **M3.7 — Release + checklist manual M3**
   - **Checklist (o dono):** itens 2 a 7 do design §12, com o Treino A, mais um superset montado na rotina para o teste.
