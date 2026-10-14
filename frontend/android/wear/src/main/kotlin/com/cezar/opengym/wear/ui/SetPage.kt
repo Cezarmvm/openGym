@@ -70,7 +70,7 @@ fun SetPage(state: SessionState, page: Int, active: Boolean, offline: Boolean, u
     val w = state.workout ?: return
     val ei = state.entryIndex
     Column(
-        Modifier.fillMaxSize().padding(horizontal = 14.dp, vertical = 14.dp),
+        Modifier.fillMaxSize().padding(start = 14.dp, end = 14.dp, top = 8.dp, bottom = 22.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center,
     ) {
@@ -105,8 +105,8 @@ private fun Status(offline: Boolean, unsent: Int) {
 
 @Composable
 private fun Title(name: String) = Text(
-    name, fontSize = 15.sp, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center,
-    maxLines = 2, overflow = TextOverflow.Ellipsis, lineHeight = 17.sp, modifier = Modifier.padding(horizontal = 10.dp),
+    name, fontSize = 14.sp, fontWeight = FontWeight.SemiBold, textAlign = TextAlign.Center,
+    maxLines = 2, overflow = TextOverflow.Ellipsis, lineHeight = 15.sp, modifier = Modifier.padding(horizontal = 16.dp),
 )
 
 @Composable
@@ -143,15 +143,16 @@ private fun TheSet(state: SessionState, e: Entry, ei: Int, si: Int, unit: String
 
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.spacedBy(4.dp),
+        verticalArrangement = Arrangement.spacedBy(3.dp),
         modifier = Modifier
             .onRotaryScrollEvent { ev ->
                 val f = focus ?: return@onRotaryScrollEvent false
+                // The Galaxy Watch bezel clicks: one detent is one event, one step (clockwise up),
+                // however many pixels the system says it scrolled. A smooth crown adds up instead.
                 acc += ev.verticalScrollPixels
-                while (abs(acc) >= ROTARY_STEP_PX) {
-                    val dir = if (acc > 0) 1 else -1
-                    move(f, dir)
-                    acc -= dir * ROTARY_STEP_PX
+                if (abs(ev.verticalScrollPixels) >= ROTARY_STEP_PX || abs(acc) >= ROTARY_STEP_PX) {
+                    move(f, if (acc > 0) 1 else -1)
+                    acc = 0f
                     haptics.performHapticFeedback(HapticFeedbackType.TextHandleMove)
                 }
                 true
@@ -166,7 +167,7 @@ private fun TheSet(state: SessionState, e: Entry, ei: Int, si: Int, unit: String
             append(if (row.warmup) stringResource(R.string.warmup) else stringResource(R.string.set_of, e.sets.take(si + 1).count { !it.warmup }, work.size))
             e.group?.let { append(" · SS ").append(it.uppercase()) }
         }
-        Text(label, fontSize = 12.sp, color = Ui.dim)
+        Text(label, fontSize = 11.sp, color = Ui.dim)
         val unitLabel = stringResource(if (unit == "lb") R.string.lb else R.string.kg)
         for (f in fields) {
             val (v, u) = when (f) {
@@ -177,7 +178,6 @@ private fun TheSet(state: SessionState, e: Entry, ei: Int, si: Int, unit: String
             Stepper(Values.show(v, locale), u, focused = focus == f, onFocus = { focus = f }, onMinus = { move(f, -1) }, onPlus = { move(f, +1) })
         }
         if (e.isCardio) Text(stringResource(R.string.cardio_on_phone), fontSize = 12.sp, color = Ui.dim, textAlign = TextAlign.Center)
-        Spacer(Modifier.height(2.dp))
         val ctxDone = if (side != null) stringResource(R.string.complete_side, stringResource(if (side == "R") R.string.side_R else R.string.side_L)) else stringResource(R.string.complete)
         Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(6.dp)) {
             Arrow(left = true, enabled = ei > 0) { SessionStore.goTo(ctx, ei - 1) }
@@ -202,18 +202,18 @@ private fun Stepper(value: String, unit: String, focused: Boolean, onFocus: () -
     Row(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween,
-        modifier = Modifier.width(150.dp).height(46.dp)
-            .border(BorderStroke(if (focused) 2.dp else 1.dp, if (focused) Ui.accent else Ui.outline), RoundedCornerShape(23.dp))
-            .clip(RoundedCornerShape(23.dp))
+        modifier = Modifier.width(148.dp).height(40.dp)
+            .border(BorderStroke(if (focused) 2.dp else 1.dp, if (focused) Ui.accent else Ui.outline), RoundedCornerShape(20.dp))
+            .clip(RoundedCornerShape(20.dp))
             .clickable(onClick = onFocus)
             .padding(horizontal = 4.dp),
     ) {
-        Round("−", stringResource(R.string.decrease), 36, onMinus)
+        Round("−", stringResource(R.string.decrease), 32, onMinus)
         Row(verticalAlignment = Alignment.Bottom) {
-            Text(value, fontSize = 26.sp, fontWeight = FontWeight.Bold)
+            Text(value, fontSize = 24.sp, fontWeight = FontWeight.Bold)
             Text(" $unit", fontSize = 11.sp, color = Ui.dim, modifier = Modifier.padding(bottom = 4.dp))
         }
-        Round("+", stringResource(R.string.increase), 36, onPlus)
+        Round("+", stringResource(R.string.increase), 32, onPlus)
     }
 }
 
@@ -230,7 +230,7 @@ private fun Round(text: String, label: String, sizeDp: Int, onClick: () -> Unit)
 fun Arrow(left: Boolean, enabled: Boolean = true, onClick: () -> Unit) {
     val label = stringResource(if (left) R.string.prev_exercise else R.string.next_exercise)
     Box(
-        Modifier.size(34.dp).clip(CircleShape).background(Ui.surface)
+        Modifier.size(30.dp).clip(CircleShape).background(Ui.surface)
             .clickable(enabled = enabled, onClick = onClick).semantics { contentDescription = label },
         contentAlignment = Alignment.Center,
     ) { Text(if (left) "‹" else "›", fontSize = 20.sp, color = if (enabled) Color(0xFFD9DDE1) else Ui.dot) }
@@ -241,7 +241,7 @@ fun Arrow(left: Boolean, enabled: Boolean = true, onClick: () -> Unit) {
 private fun DoneButton(label: String, onDone: () -> Unit, onSkip: () -> Unit) {
     val haptics = LocalHapticFeedback.current
     Box(
-        Modifier.width(96.dp).height(42.dp).clip(RoundedCornerShape(21.dp)).background(Ui.accent)
+        Modifier.width(92.dp).height(36.dp).clip(RoundedCornerShape(18.dp)).background(Ui.accent)
             .pointerInput(onDone, onSkip) {
                 detectTapGestures(
                     onTap = { onDone() },

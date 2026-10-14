@@ -64,14 +64,14 @@ fun RestPage(state: SessionState, rest: Rest?, page: Int) {
                 drawArc(ringColor, -90f, 360f * frac, false, tl, sz, style = Stroke(stroke, cap = StrokeCap.Round))
             }
         }
-        Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(3.dp)) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally, verticalArrangement = Arrangement.spacedBy(2.dp), modifier = Modifier.padding(bottom = 16.dp)) {
             PageDots(4, page)
             if (rest == null || left <= 0) {
                 Text(stringResource(R.string.no_rest), fontSize = 14.sp, color = Ui.dim)
                 return@Column
             }
             Text(stringResource(R.string.rest), fontSize = 12.sp, fontWeight = FontWeight.SemiBold, color = Ui.accent, letterSpacing = 1.5.sp)
-            Text(RestClock.label(left), fontSize = 44.sp, fontWeight = FontWeight.Bold)
+            Text(RestClock.label(left), fontSize = 40.sp, fontWeight = FontWeight.Bold)
             val w = state.workout
             val e = w?.entries?.getOrNull(state.entryIndex)
             val si = if (e != null) SessionCore.setIndex(state, state.entryIndex) else null
@@ -87,9 +87,9 @@ fun RestPage(state: SessionState, rest: Rest?, page: Int) {
                 }
             }
             Row(horizontalArrangement = Arrangement.spacedBy(5.dp), modifier = Modifier.padding(top = 6.dp)) {
-                Pill(stringResource(R.string.minus15), Ui.surface, Color.White, Modifier.width(52.dp)) { SessionStore.adjustRest(ctx, -15) }
+                Pill(stringResource(R.string.minus15), Ui.surface, Color.White, Modifier.width(50.dp)) { SessionStore.adjustRest(ctx, -15) }
                 Pill(stringResource(R.string.skip), Color.White, Color.Black, Modifier.width(62.dp)) { SessionStore.skipRest(ctx) }
-                Pill(stringResource(R.string.plus15), Ui.surface, Color.White, Modifier.width(52.dp)) { SessionStore.adjustRest(ctx, +15) }
+                Pill(stringResource(R.string.plus15), Ui.surface, Color.White, Modifier.width(50.dp)) { SessionStore.adjustRest(ctx, +15) }
             }
         }
     }
