@@ -95,3 +95,25 @@ O fingerprint é público: ele só identifica a chave, não dá acesso a ela.
   gordura e FC no Health Connect. Não grava massa magra, água nem massa óssea.
 - **Pendente (HW-2.1):** confirmar, depois do primeiro treino finalizado no openGym, se ele
   aparece no histórico de exercícios do Samsung Health.
+
+## Spike M2.1: JS da WebView com a tela apagada (risco R-1), S25 Ultra, 2026-10-14
+
+Branch local `spike/bg-js` (commit `e7056ff3`, não enviado ao GitHub; scripts e logs em
+`spike-results/`). Build debug `com.cezar.opengym.test`, sem dados reais. Um broadcast do adb faz
+o papel da mensagem do relógio: plugin nativo → evento no JS → `setState` do Zustand →
+`subscribe` → `ack` nativo, que registra a latência. Bateria simulada como "fora da tomada"
+(`dumpsys battery unplug`), tela confirmada apagada (`mWakefulness=Dozing`) antes de cada mensagem.
+
+| Cenário | Tela acesa | 1 min apagada | 2–6 min apagada |
+|---|---|---|---|
+| A. Sem FGS | 3–5 ms | 4 ms | **JS parado** (nativo recebe, JS não responde) |
+| B. FGS `specialUse` | 4 ms | **JS parado** | **JS parado**: tudo entregue de uma vez ao acender a tela (25–330 s de atraso) |
+| C. FGS + Doze forçado | 4 ms | **JS parado** | **JS parado** |
+| D/E. FGS + `setRendererPriorityPolicy(IMPORTANT, waived=false)` | 3 ms | **JS parado** | **JS parado** (E: entregue ao acender; D: eventos perdidos) |
+
+O processo do app fica vivo e não congelado com o FGS (`procState 4`, `isFrozen=false`) e recebe
+cada mensagem na hora. O processo de renderização da WebView fica `cached` (adj 900, grupo de
+background) e o JS não roda até a tela voltar. O Capacitor não pausa a WebView (`KeepRunning` =
+true). Conclusão: **R-1 confirmado**. Com o celular no bolso, o JS não processa comandos do
+relógio, nem com FGS. Em alguns casos o evento nativo → JS se perdeu, o que confirma que a fila
+durável (`CommandInbox`, drenada pelo JS) é obrigatória. Spec a revisar antes do M2.2.
