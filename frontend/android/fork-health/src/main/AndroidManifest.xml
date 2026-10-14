@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- FORK: what the fork reads back from Health Connect (specs/fork-health HR-3.2). Asked for only
+     when the owner turns "Read from Health Connect" on. -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <uses-sdk tools:overrideLibrary="androidx.health.connect.client" />
+    <uses-permission android:name="android.permission.health.READ_WEIGHT" />
+    <uses-permission android:name="android.permission.health.READ_BODY_FAT" />
+    <uses-permission android:name="android.permission.health.READ_HEART_RATE" />
+    <uses-permission android:name="android.permission.health.READ_HEALTH_DATA_HISTORY" />
+</manifest>

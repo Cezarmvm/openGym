@@ -26,6 +26,7 @@ public class MainActivity extends BridgeActivity {
         registerPlugin(RestAlertPlugin.class);
         registerPlugin(BackupFolderPlugin.class);
         registerPlugin(SystemBarsPlugin.class);
+        registerPlugin(com.cezar.opengym.forkhealth.HealthReadPlugin.class); // FORK: specs/fork-health
         super.onCreate(savedInstanceState);
         passSystemBarsToPage();
     }

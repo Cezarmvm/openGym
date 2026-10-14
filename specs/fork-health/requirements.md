@@ -1,7 +1,7 @@
 # Requisitos: Health Connect nos dois sentidos (openGym ↔ Samsung Health)
 
 > Spec `fork-health` · Fase 1 · Base: fork `fork/main` (upstream v1.4.1 + fork-watch M1)
-> Status: **rascunho, aguardando aprovação**
+> Status: **aprovado em 2026-10-14**
 
 ## 1. Contexto
 

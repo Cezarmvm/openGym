@@ -13,3 +13,7 @@ android {
         applicationId 'com.cezar.opengym'
     }
 }
+
+dependencies {
+    implementation project(':fork-health')   // specs/fork-health: HealthReadPlugin
+}

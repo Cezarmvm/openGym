@@ -8,7 +8,7 @@
   - Aceite: ligar a gravação não envia treinos anteriores; pesagens continuam. Suíte do upstream igual. Instalado (1.4.1-cezar.3) e ligado no S25 em 2026-10-14.
   - Req: HW-1
 
-- [ ] **H2: Módulo `:fork-health` + `HealthReadPlugin` (Java)**
+- [x] **H2: Módulo `:fork-health` + `HealthReadPlugin` (Java)**
   - Arquivos: `frontend/android/fork-health/**`, `fork/android/fork-settings.gradle`, `fork/android/fork-app.gradle`, `MainActivity.java` (+2 linhas FORK)
   - Aceite: compila. `status`, `requestPermissions`, `readSince` e `heartRate` respondem no S25 (log via `chrome://inspect` não existe em release: verificar com um build debug `.test`). Permissões de leitura aparecem na tela do Health Connect.
   - Req: HR-3.2, design §2

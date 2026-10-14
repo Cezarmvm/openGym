@@ -1,7 +1,7 @@
 # Design: Health Connect nos dois sentidos
 
 > Spec `fork-health` · Fase 2 · Requisitos: `requirements.md`
-> Status: **rascunho, aguardando aprovação**
+> Status: **aprovado em 2026-10-14**
 
 ## 1. Visão geral
 
