@@ -1,7 +1,7 @@
 # Requisitos — fork do openGym com APK próprio + app para Galaxy Watch
 
 > Spec `fork-watch` · Fase 1 (Especificação) · Base: upstream openGym v1.4.1 (`versionCode 26`)
-> Status: **rascunho, aguardando aprovação**
+> Status: **aprovado em 2026-10-13** (decisões das perguntas em aberto na seção 4)
 
 ## 1. Contexto e objetivo
 
@@ -362,16 +362,18 @@ bolso e a tela apagada.
 - Alterar a lógica de treino em `frontend/src/lib/` (só código novo que a usa).
 - Tradução da UI do relógio para todos os idiomas do upstream. O relógio terá pt-BR e inglês.
 
-## 4. Perguntas em aberto
+## 4. Decisões (antes "Perguntas em aberto")
 
-| # | Pergunta | Proposta padrão, se você não decidir |
+Aprovadas pelo dono em 2026-10-13, com as recomendações do assistente.
+
+| # | Tema | Decisão |
 |---|---|---|
-| P-1 | Qual versão de Wear OS está no seu Galaxy Watch 4 Classic? (confirmo via `adb` quando ele estiver conectado) | `minSdk 30` (Wear OS 3), que cobre todas as versões que o Watch 4 recebeu |
-| P-2 | Qual o modelo do celular e a versão de Android / One UI? A Now Bar (P2) depende de One UI 7+ e da política da Samsung para apps de terceiros | Tentar Live Update do Android 16 e cair para ongoing normal |
-| P-3 | Verificador de atualização: **desativar** ou **apontar para `Cezarmvm/openGym`**? | Apontar para o fork. Sem release publicada ele diz "sem atualização" e fica pronto se um dia você publicar |
-| P-4 | Frequência cardíaca (P2): aceita guardar num campo extra opcional do treino, ignorado pelo app oficial? Ou só mostrar no relógio e mandar para o Health Connect? | Decidir no design depois de verificar se o import do app oficial tolera campos extras |
-| P-5 | Séries de tempo, cardio e drop sets/rest-pause: precisam de UI própria no relógio já no M3, ou "continue no celular" basta no início? | Reps+carga (incluindo unilateral L/R) com UI completa no M3. Tempo, cardio, drop set e rest-pause com UI básica (concluir/pular) e o resto no celular |
-| P-6 | Ao iniciar o treino no celular, o app do relógio deve **abrir sozinho** ou só aparecer como Ongoing Activity? | Só Ongoing Activity + vibração curta (abrir sozinho incomoda se o relógio estiver em outro uso) |
-| P-7 | Incremento de carga no bezel: usar o incremento do exercício que o app já tem, ou um fixo (ex.: 1 kg / 2,5 kg)? | O incremento do exercício que o celular já usa, vindo no snapshot |
-| P-8 | Nome final do `applicationId`: `com.cezar.opengym` serve? (não dá para trocar depois sem perder dados/atualização) | `com.cezar.opengym` |
-| P-9 | O fork é público (exigência prática da AGPL ao distribuir). Tudo bem os specs ficarem públicos no seu GitHub? | Sim |
+| D-1 | Versão do Wear OS | App Wear com `minSdk 30` (Wear OS 3+), `targetSdk`/`compileSdk 35`. A versão real do relógio é confirmada via `adb` no M2 e registrada no `FORK.md`. |
+| D-2 | Celular / Now Bar (P2) | Modelo e versão de One UI ainda não informados. O design trata isso de forma genérica: Live Update (Android 16 `setRequestPromotedOngoing` + `ProgressStyle`) quando a API existir, notificação ongoing comum caso contrário. Confirmar o aparelho via `adb` no M1. |
+| D-3 | Verificador de atualização | Aponta para `Cezarmvm/openGym` (troca de uma constante em `update.js`, marcada `// FORK:`). Como o fork não publica releases, ele responde "sem atualização". |
+| D-4 | Frequência cardíaca (P2) | Mostrar no relógio sempre. Salvar no treino só como campo extra opcional (`hr`), e só se o M5 provar que backups com o campo importam sem erro no app oficial. Caso contrário, fica só no relógio. |
+| D-5 | Tipos de série no relógio | UI completa para séries de reps+carga, incluindo unilateral L/R e aquecimento. Tempo, cardio, drop set e rest-pause têm UI básica (ver valores, concluir) e "editar no celular" para o resto. Séries de tempo concluídas pelo relógio não disparam o cronômetro de hold: são marcadas como feitas com o tempo planejado. |
+| D-6 | Abrir o app do relógio sozinho | Não. Ao iniciar o treino, o relógio mostra a Ongoing Activity e vibra uma vez. O usuário toca para abrir. |
+| D-7 | Incremento de carga | O mesmo passo que o celular usa no stepper do exercício (`weightIncrement`), calculado no JS e enviado no snapshot. |
+| D-8 | `applicationId` | `com.cezar.opengym` (release) e `com.cezar.opengym.test` (debug), iguais no celular e no relógio. |
+| D-9 | Specs públicos | Sim, no fork público `Cezarmvm/openGym`. |
