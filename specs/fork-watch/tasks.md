@@ -94,10 +94,11 @@ bloqueado, ela aparece no celular ao abrir o app, sem perda.
   - Resultado: Galaxy Watch 4 Classic `SM-R890`, Wear OS 6 / Android 16 (SDK 36). `FORK.md` e `docs/FORK_INSTALL.md` atualizados.
   - Req: RB-5.2, RB-8.1, D-1
 
-- [ ] **M2.3 — Trazer o JS do relógio do upstream (D-11)**
+- [x] **M2.3 — Trazer o JS do relógio do upstream (D-11)**
   - Arquivos: merge do `upstream/watch` (D-11 a) ou branch `fork/watch-next` (D-11 b). Conflitos nos 5 pontos FORK (`lib/health-sync.js`, `lib/health-sync.test.js`, `views/Settings.jsx`, `MainActivity.java`, `settings.gradle`). `FORK.md` (tabela FORK, nota do branch seguido) e `fork/android/*.gradle`, se o upstream trouxer *flavors* ou AGP novo.
   - Aceite: `npm test` com só as falhas já conhecidas do Windows, ou com as falhas novas investigadas e registradas. `fork-release.sh` gera o APK `sideload` assinado. Antes de instalar, exportar o backup do app para fora do repo. Upgrade sobre o `1.4.1-cezar.5` sem perder dados (treinos, rotina, medidas, Health Connect ligado). `versionCode` maior que o instalado.
   - Req: A-1, A-7, RB-3, RB-7, RT-3, design §14
+  - ✅ M2.3 — merge `51584aca` (upstream `78d2b403`), conflitos só nos 5 pontos FORK; vitest 5573/5576 (as 2 falhas antigas do Windows + `android-asset-packs` com separador `\`); backup de 23 treinos/413 séries exportado para `Academia/backups/` (fora do repo); `1.4.1-cezar.6` (26006, sideload) instalado por cima do `cezar.5` no S25: treinos, pesagens, rotina, Conexão Saúde (gravar e ler) preservados.
 
 - [ ] **M2.4 — Kotlin e plugins de build**
   - Arquivos: `frontend/android/build.gradle` (+3 linhas FORK de classpath), `fork/android/fork-settings.gradle`
