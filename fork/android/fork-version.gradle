@@ -1,0 +1,43 @@
+// FORK: version scheme shared by the phone app and the watch app (specs/fork-watch/design.md §9.3).
+//   versionCode = upstreamVersionCode * 1000 + forkBuild
+//   versionName = "<upstreamVersionName>-cezar.<forkBuild>"
+// The upstream values are read from app/build.gradle so both modules agree; forkBuild lives in
+// fork/android/version.properties and only ever goes up (scripts/fork-release.* bumps it).
+
+def forkAndroidDir = rootProject.file('../../fork/android')
+
+def upstreamGradle = rootProject.file('app/build.gradle').getText('UTF-8')
+def codeMatch = upstreamGradle =~ /versionCode\s+(\d+)/
+def nameMatch = upstreamGradle =~ /versionName\s+"([^"]+)"/
+if (!codeMatch.find() || !nameMatch.find()) {
+    throw new GradleException('FORK: could not read versionCode/versionName from app/build.gradle')
+}
+def upstreamCode = codeMatch.group(1) as int
+def upstreamName = nameMatch.group(1)
+
+def versionProps = new Properties()
+new File(forkAndroidDir, 'version.properties').withInputStream { versionProps.load(it) }
+def forkBuild = (versionProps.getProperty('forkBuild') ?: '0') as int
+
+ext.forkVersionCode = upstreamCode * 1000 + forkBuild
+ext.forkVersionName = "${upstreamName}-cezar.${forkBuild}"
+
+android {
+    defaultConfig {
+        versionCode forkVersionCode
+        versionName forkVersionName
+    }
+}
+
+// Fails when the computed code is not above the last one released (fork/android/last-version-code,
+// written by the release script), so an install over the previous build can never be refused.
+tasks.register('forkVersionCheck') {
+    doLast {
+        def last = new File(forkAndroidDir, 'last-version-code')
+        def lastCode = last.exists() ? (last.text.trim() ?: '0') as int : 0
+        if (forkVersionCode <= lastCode) {
+            throw new GradleException("FORK: versionCode ${forkVersionCode} is not above the last release (${lastCode}). Bump forkBuild in fork/android/version.properties.")
+        }
+        println "FORK: versionCode ${forkVersionCode} (${forkVersionName}) > last ${lastCode}"
+    }
+}

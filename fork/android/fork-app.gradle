@@ -1,0 +1,19 @@
+// FORK: build configuration of the openGym (Cezar) phone app, applied at the end of
+// frontend/android/app/build.gradle. Own applicationId so it installs next to the official app;
+// the namespace (Java packages) stays upstream's. See specs/fork-watch/design.md §9.1.
+
+def forkAndroidDir = rootProject.file('../../fork/android')
+
+apply from: new File(forkAndroidDir, 'fork-version.gradle')
+apply from: new File(forkAndroidDir, 'fork-signing.gradle')
+
+android {
+    defaultConfig {
+        applicationId 'com.cezar.opengym'
+    }
+    sourceSets {
+        // Visible name "openGym (Cezar)" for the release build; the debug build keeps upstream's
+        // own test name from src/debug/res.
+        release.res.srcDirs += new File(forkAndroidDir, 'release-res').path
+    }
+}

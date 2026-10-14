@@ -1,0 +1,3 @@
+// FORK: extra Gradle modules of the openGym (Cezar) fork, applied from frontend/android/settings.gradle.
+// Kept here so the upstream settings file carries a single line. Modules are added in M2
+// (specs/fork-watch/tasks.md): :fork-protocol, :fork-wearbridge, :wear.

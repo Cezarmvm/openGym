@@ -17,6 +17,14 @@ Toda mudança em arquivo do upstream é marcada com `FORK:` no comentário. Para
 | Arquivo | O que muda | Como reaplicar após conflito |
 |---|---|---|
 | `.gitignore` | bloco `# FORK:` com keystore, `*.jks`, `*.keystore` e `dist-apk/` | manter o bloco no fim do arquivo |
+| `frontend/android/settings.gradle` | `apply from` de `fork/android/fork-settings.gradle` (módulos do fork) | manter a linha no fim |
+| `frontend/android/app/build.gradle` | `apply from` de `fork/android/fork-app.gradle` (applicationId, nome, versão, assinatura) | manter a linha no **fim** (precisa do `defaultConfig` do upstream já lido) |
+
+## Build do fork (Gradle)
+
+- `fork/android/fork-app.gradle`: `applicationId com.cezar.opengym` (debug: `.test`) e nome "openGym (Cezar)" via `fork/android/release-res`.
+- `fork/android/fork-version.gradle`: `versionCode = upstream × 1000 + forkBuild`, `versionName = <upstream>-cezar.<forkBuild>`. O `forkBuild` fica em `fork/android/version.properties` e nunca zera. A task `forkVersionCheck` compara com `fork/android/last-version-code`.
+- `fork/android/fork-signing.gradle`: lê `fork/keystore.properties` (ou `$OPENGYM_KEYSTORE_PROPERTIES`), assina v1+v2+v3, e o release falha sem ele (`forkCheckSigning`).
 
 ## Procedimento de merge com o upstream
 

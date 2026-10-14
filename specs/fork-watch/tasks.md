@@ -18,27 +18,27 @@
 
 Termina com: APK `com.cezar.opengym` assinado com a chave do dono, instalado no celular, atualizando por cima (N → N+1) sem perder dados.
 
-- [ ] **M1.1 — Base do fork: `FORK.md`, `.gitignore` e config local do git**
+- [x] **M1.1 — Base do fork: `FORK.md`, `.gitignore` e config local do git**
   - Arquivos: `FORK.md` (novo), `.gitignore` (bloco `# FORK:`), config local `core.autocrlf=input`
   - Aceite: `.gitignore` ignora `fork/keystore.properties`, `*.jks`, `*.keystore` e `dist-apk/`. `git check-ignore` confirma cada padrão. `FORK.md` tem: objetivo, tabela "pontos FORK" (vazia por enquanto), versões de ferramentas (cmdline-tools 15859902, JDK 21, build-tools 35), as 2 falhas de teste que o upstream já tem no Windows e o procedimento de merge (design §14).
   - Req: RB-2.4, RB-6.3, RB-9.4, RT-3, design §9.6
 
-- [ ] **M1.2 — Estrutura `fork/android/` e ganchos Gradle**
+- [x] **M1.2 — Estrutura `fork/android/` e ganchos Gradle**
   - Arquivos: `fork/android/fork-settings.gradle` (por enquanto vazio, só comentário), `fork/android/fork-app.gradle`, `frontend/android/settings.gradle` (+1 linha FORK), `frontend/android/app/build.gradle` (+1 linha FORK)
   - Aceite: `./gradlew :app:assembleDebug` compila. `git diff upstream/main -- frontend/android` mostra só as 2 linhas marcadas.
   - Req: RB-9.2, RB-9.3, design §9.1
 
-- [ ] **M1.3 — `applicationId` e nome visível**
+- [x] **M1.3 — `applicationId` e nome visível**
   - Arquivos: `fork/android/fork-app.gradle`, `fork/android/release-res/values/strings.xml`
   - Aceite: `aapt2 dump badging` do release mostra `package: name='com.cezar.opengym'` e `application-label:'openGym (Cezar)'`. O debug mostra `com.cezar.opengym.test`. O `namespace` continua `ch.duartesantos.opengym`.
   - Req: RB-1.1, RB-1.3, D-8
 
-- [ ] **M1.4 — Versionamento automático**
+- [x] **M1.4 — Versionamento automático**
   - Arquivos: `fork/android/fork-version.gradle`, `fork/android/version.properties` (`forkBuild=0`), `fork/android/fork-app.gradle`
   - Aceite: com `forkBuild=1`, `aapt2 dump badging` mostra `versionCode='26001'` e `versionName='1.4.1-cezar.1'`. Um teste Gradle simples (task `forkVersionCheck`) falha se o `versionCode` calculado for ≤ ao último gravado em `fork/android/last-version-code` (arquivo atualizado pelo script de release).
   - Req: RB-3.1, RB-3.3, design §9.3
 
-- [ ] **M1.5 — Assinatura release pelo Gradle**
+- [x] **M1.5 — Assinatura release pelo Gradle**
   - Arquivos: `fork/android/fork-signing.gradle`, `fork/android/fork-app.gradle`, `fork/keystore.properties.example`
   - Aceite: (a) sem `keystore.properties`, `assembleRelease` falha na task `forkCheckSigning` com a mensagem apontando o guia. (b) Com uma keystore **de teste** gerada pelo assistente em `%TEMP%` (descartada depois), `assembleRelease` gera `app-release.apk` e `apksigner verify -v` mostra v1, v2 e v3 = true. Nada de debug key.
   - Req: RB-2.1, RB-2.2, RB-2.3, design §9.2

@@ -1,0 +1,6 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <!-- FORK: visible name of the fork's release build, merged over src/main/res. -->
+    <string name="app_name">openGym (Cezar)</string>
+    <string name="title_activity_main">openGym (Cezar)</string>
+</resources>

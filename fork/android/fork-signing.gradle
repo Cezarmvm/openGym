@@ -1,0 +1,41 @@
+// FORK: release signing from a keystore.properties kept out of git (specs/fork-watch/design.md §9.2).
+// Looked up at $OPENGYM_KEYSTORE_PROPERTIES, else fork/keystore.properties. Keys: storeFile,
+// storePassword, keyAlias, keyPassword. Without it a release build fails — it never falls back to
+// the debug key.
+
+def envPath = System.getenv('OPENGYM_KEYSTORE_PROPERTIES')
+def ksPropsFile = envPath ? new File(envPath) : rootProject.file('../../fork/keystore.properties')
+def ksProps = new Properties()
+if (ksPropsFile.exists()) ksPropsFile.withInputStream { ksProps.load(it) }
+def ksReady = ['storeFile', 'storePassword', 'keyAlias', 'keyPassword'].every { ksProps.getProperty(it) }
+
+android {
+    signingConfigs {
+        forkRelease {
+            if (ksReady) {
+                storeFile file(ksProps.getProperty('storeFile'))
+                storePassword ksProps.getProperty('storePassword')
+                keyAlias ksProps.getProperty('keyAlias')
+                keyPassword ksProps.getProperty('keyPassword')
+            }
+            // v1 only matters below Android 7 (API 24), which the phone app still supports.
+            enableV1Signing((android.defaultConfig.minSdkVersion?.apiLevel ?: 24) < 24)
+            enableV2Signing true
+            enableV3Signing true
+        }
+    }
+    buildTypes {
+        release {
+            signingConfig ksReady ? signingConfigs.forkRelease : null
+        }
+    }
+}
+
+def forkCheckSigning = tasks.register('forkCheckSigning') {
+    doLast {
+        if (!ksReady) {
+            throw new GradleException("FORK: release signing is not configured — ${ksPropsFile} is missing or incomplete. See docs/FORK_INSTALL.md (Keystore).")
+        }
+    }
+}
+tasks.matching { it.name == 'preReleaseBuild' }.configureEach { dependsOn forkCheckSigning }
