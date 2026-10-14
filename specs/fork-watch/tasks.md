@@ -100,10 +100,11 @@ bloqueado, ela aparece no celular ao abrir o app, sem perda.
   - Req: A-1, A-7, RB-3, RB-7, RT-3, design §14
   - ✅ M2.3 — merge `51584aca` (upstream `78d2b403`), conflitos só nos 5 pontos FORK; vitest 5573/5576 (as 2 falhas antigas do Windows + `android-asset-packs` com separador `\`); backup de 23 treinos/413 séries exportado para `Academia/backups/` (fora do repo); `1.4.1-cezar.6` (26006, sideload) instalado por cima do `cezar.5` no S25: treinos, pesagens, rotina, Conexão Saúde (gravar e ler) preservados.
 
-- [ ] **M2.4 — Kotlin e plugins de build**
+- [x] **M2.4 — Kotlin e plugins de build**
   - Arquivos: `frontend/android/build.gradle` (+3 linhas FORK de classpath), `fork/android/fork-settings.gradle`
   - Aceite: `./gradlew help` funciona. `:app:assembleSideloadDebug` (ou `:app:assembleDebug`) continua compilando. Versões registradas no `FORK.md`.
   - Req: design §9, D-1, R-5
+  - ✅ M2.4 — Kotlin 2.2.20 + compose compiler 2.2.20 + kotlinx-serialization (plugin 2.2.20) no `build.gradle` (3 linhas FORK) com AGP 8.13 / Gradle 8.14.3 do upstream; `./gradlew help` e `:app:assembleSideloadDebug` ok.
 
 - [ ] **M2.5 — Módulo `:watch-core`: modelos + fixtures**
   - Arquivos: `frontend/android/watch-core/**` (Kotlin/JVM, kotlinx-serialization: `Snapshot`, `ActiveWorkout`, `Entry`, `SetRow`, `Sides`, `Ready`, `ReadySession`, `WatchSettings`, `Event`), `frontend/src/fork/watch-fixtures.test.js` (gera `watch-core/src/test/resources/fixtures/*.json` com o `buildSnapshot`/`fitSnapshot` do upstream)

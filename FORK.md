@@ -18,6 +18,7 @@ Toda mudança em arquivo do upstream é marcada com `FORK:` no comentário. Para
 |---|---|---|
 | `.gitignore` | bloco `# FORK:` com keystore, `*.jks`, `*.keystore` e `dist-apk/` | manter o bloco no fim do arquivo |
 | `frontend/android/settings.gradle` | `apply from` de `fork/android/fork-settings.gradle` (módulos do fork) | manter a linha no fim |
+| `frontend/android/build.gradle` | classpath do Kotlin 2.2.20, do compose compiler e do kotlinx-serialization (módulos do relógio) | manter as 3 linhas FORK no `buildscript.dependencies` |
 | `frontend/android/app/build.gradle` | `apply from` de `fork/android/fork-app.gradle` (applicationId, nome, versão, assinatura) | manter a linha no **fim** (precisa do `defaultConfig` do upstream já lido) |
 | `frontend/src/lib/update.js` | `REPO = 'Cezarmvm/openGym'`: o verificador só olha as releases do fork | manter a constante do fork |
 | `frontend/src/lib/update.test.js` | a URL esperada passa a ser a do fork (linha marcada) | idem |
