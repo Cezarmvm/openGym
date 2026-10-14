@@ -18,7 +18,7 @@
   - Aceite: todos os casos do design §6 (vitest) verdes.
   - Req: HR-1, HR-2, HQ-1
 
-- [ ] **H4: Sincronização de leitura (`fork/health-read-sync.js`) + inicialização**
+- [x] **H4: Sincronização de leitura (`fork/health-read-sync.js`) + inicialização**
   - Arquivos: `frontend/src/fork/health-read-sync.{js,test.js}`, `frontend/src/main.jsx` (+1 linha FORK)
   - Aceite: com o plugin falso, primeira leitura com `since=0`, depois incremental com margem de 1 dia, nada quando desligado, erro de permissão registrado sem quebrar o app.
   - Req: HR-1.1, HR-3.3, HR-3.4

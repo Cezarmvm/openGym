@@ -22,6 +22,9 @@ startMediaSync(useStore)
 // this keeps the focused field above it. Idle everywhere else.
 startNativeKeyboard()
 
+// FORK: specs/fork-health — weight and body fat read back from Health Connect, when switched on.
+if (MOBILE) import('./fork/health-read-sync.js').then(m => m.initHealthRead()).catch(() => {})
+
 // Not in the mobile build: the native shell already serves everything from disk.
 if (!MOBILE && 'serviceWorker' in navigator && location.protocol === 'https:') {
   navigator.serviceWorker.register('sw.js').catch(() => {})
