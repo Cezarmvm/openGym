@@ -120,10 +120,10 @@ step 'mobile web build'
 
 # ── Gradle ──────────────────────────────────────────────────────────────────────────────────────
 step 'gradle release build'
-TASKS=(:app:forkVersionCheck :app:assembleRelease)
+TASKS=(:app:forkVersionCheck :app:assembleSideloadRelease)   # upstream builds sideload/play flavors; the fork ships the sideload APK
 [ $HAS_WATCH -eq 1 ] && TASKS+=(:wear:assembleRelease)
 (cd "$ANDROID_DIR" && ./gradlew --no-daemon "${TASKS[@]}")
-PHONE_APK="$ANDROID_DIR/app/build/outputs/apk/release/app-release.apk"
+PHONE_APK="$ANDROID_DIR/app/build/outputs/apk/sideload/release/app-sideload-release.apk"
 WATCH_APK="$ANDROID_DIR/wear/build/outputs/apk/release/wear-release.apk"
 [ -f "$PHONE_APK" ] || die "phone APK not produced: $PHONE_APK"
 [ $HAS_WATCH -eq 0 ] || [ -f "$WATCH_APK" ] || die "watch APK not produced: $WATCH_APK"
