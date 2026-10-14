@@ -1,7 +1,12 @@
 # Requisitos — fork do openGym com APK próprio + app para Galaxy Watch
 
 > Spec `fork-watch` · Fase 1 (Especificação) · Base: upstream openGym v1.4.1 (`versionCode 26`)
-> Status: **aprovado em 2026-10-13** (decisões das perguntas em aberto na seção 4)
+> Status: R1 aprovada em 2026-10-13 · **Revisão 2 (2026-10-14) aguardando aprovação**
+
+> **Revisão 2.** O spike M2.1 mostrou que o JS do celular não roda com o celular bloqueado, nem com
+> foreground service (`FORK.md`). O relógio passa a conduzir o treino sozinho, e o celular aplica o
+> que veio do relógio quando é aberto, no formato que o upstream já usa para o Apple Watch
+> (`design.md` §0). Itens alterados estão marcados com **(R2)**. Os demais seguem como na R1.
 
 ## 1. Contexto e objetivo
 
@@ -158,8 +163,10 @@ celular.
 - **RW-1.1 (P1)** ENQUANTO houver treino ativo e celular e relógio estiverem conectados, o relógio
   DEVE mostrar o nome do exercício atual, "série X de Y", e a carga e as reps da série atual,
   pré-preenchidas com os valores que o celular já calcula.
-- **RW-1.2 (P1)** O relógio NÃO DEVE calcular progressão, PRs, pré-preenchimento nem qualquer regra de
-  treino. Ele DEVE exibir o que o snapshot traz.
+- **RW-1.2 (P1) (R2)** O relógio NÃO DEVE calcular progressão, PRs, pré-preenchimento nem qualquer regra de
+  treino. Ele DEVE exibir os valores que o snapshot traz. A ordem das séries durante a sessão
+  (próxima série, outro lado, rodízio do superset, quando descansar) segue o núcleo da sessão do
+  upstream (`WatchCore`), portado sem mudança de comportamento.
 - **RW-1.3 (P1)** ENQUANTO o exercício atual fizer parte de um superset, o relógio DEVE indicar o
   superset e mostrar o exercício e a série da vez, na ordem que o celular determina.
 - **RW-1.4 (P1)** QUANDO o exercício atual for de tempo, cardio ou unilateral (L/R), ENTÃO o relógio DEVE
@@ -175,38 +182,43 @@ celular.
 - **RW-2.2 (P1)** QUANDO o usuário girar o bezel com o campo de reps em foco, ENTÃO as reps DEVEM mudar de
   1 em 1, com mínimo 0.
 - **RW-2.3 (P1)** O relógio DEVE ter botões +/− na tela que fazem o mesmo ajuste do bezel.
-- **RW-2.4 (P1)** QUANDO a carga ou as reps forem ajustadas no relógio, ENTÃO o comando DEVE chegar ao
-  celular, e a mudança DEVE aparecer no celular dentro do prazo de RS-1.1. Mudanças de carga
-  seguem a regra de cascata que o celular já aplica às séries seguintes.
+- **RW-2.4 (P1) (R2)** QUANDO a carga ou as reps forem ajustadas no relógio, ENTÃO os valores DEVEM
+  seguir junto com a série concluída (`setDone` com `w`/`r`) e ser gravados no celular quando ele
+  aplicar o evento (RS-1.1).
 
 **História RW-3.** Como usuário, quero concluir a série no relógio e descansar.
 
-- **RW-3.1 (P1)** QUANDO o usuário tocar "Concluir série", ENTÃO o comando DEVE ser enviado ao celular,
-  que marca a série com a mesma lógica de um toque na tela do celular (incluindo decidir se há
-  descanso e se avança de exercício).
-- **RW-3.2 (P1)** QUANDO o celular iniciar um descanso, ENTÃO o timer DEVE aparecer no relógio e no
-  celular com o mesmo horário de término (diferença ≤ 1 s com os dois conectados).
+- **RW-3.1 (P1) (R2)** QUANDO o usuário tocar "Concluir série", ENTÃO o relógio DEVE marcar a série na
+  hora, decidir o próximo passo pelo núcleo do upstream e enviar o evento. O celular, ao
+  aplicá-lo, DEVE marcar a série com a mesma ação de um toque na tela (`bindWatchActions`).
+- **RW-3.2 (P1) (R2)** QUANDO uma série for concluída no relógio e o núcleo pedir descanso, ENTÃO o
+  relógio DEVE iniciar o descanso sozinho, com o `restSec` do exercício (ou o global) do snapshot.
+  QUANDO o snapshot trouxer um descanso rodando no celular, o relógio DEVE segui-lo.
 - **RW-3.3 (P1)** QUANDO o descanso terminar, ENTÃO o relógio DEVE vibrar, mesmo com a tela em modo
   ambiente ou apagada.
-- **RW-3.4 (P1)** QUANDO o usuário tocar +15s, −15s ou "Pular descanso" no relógio, ENTÃO o
-  ajuste DEVE valer nos dois lados (relógio, tela do celular e notificação do celular).
-- **RW-3.5 (P1)** QUANDO o descanso for ajustado ou pulado no celular (tela ou notificação), ENTÃO o
-  relógio DEVE refletir o novo estado.
+- **RW-3.4 (P1) (R2)** QUANDO o usuário tocar +15s, −15s ou "Pular descanso" no relógio, ENTÃO o
+  ajuste DEVE valer no relógio. O descanso do celular não é alterado pelo relógio (como no Apple
+  Watch do upstream).
+- **RW-3.5 (P1) (R2)** QUANDO o descanso for ajustado ou pulado no celular com o relógio conectado,
+  ENTÃO o relógio DEVE refletir o novo estado pelo próximo snapshot.
 
 **História RW-4.** Como usuário, quero navegar entre exercícios pelo relógio.
 
-- **RW-4.1 (P1)** O relógio DEVE ter ações "próximo" e "anterior" que trocam o exercício atual no
-  celular, com a mesma semântica dos botões Prev/Next do celular (por unidade de superset).
+- **RW-4.1 (P1) (R2)** O relógio DEVE permitir trocar o exercício em que está e pular uma série
+  ("pular série" deixa a série não feita e mostra a próxima). Isso vale para o relógio. O
+  exercício atual do celular não é alterado pelo relógio.
 - **RW-4.2 (P1)** O relógio DEVE ter uma lista dos exercícios do treino, com indicação de séries feitas
   sobre o total, que permite pular direto para qualquer um.
-- **RW-4.3 (P1)** QUANDO o exercício atual mudar no celular, ENTÃO o relógio DEVE acompanhar.
+- **RW-4.3 (P1) (R2)** QUANDO um exercício for adicionado, removido ou trocado no celular, ENTÃO o
+  relógio DEVE refletir a nova lista no próximo snapshot, sem perder as séries que já marcou.
 
 **História RW-5.** Como usuário, quero finalizar o treino pelo relógio.
 
 - **RW-5.1 (P1)** QUANDO o usuário pedir para finalizar no relógio, ENTÃO o relógio DEVE pedir
   confirmação (ex.: segurar ou confirmar) antes de enviar o comando.
-- **RW-5.2 (P1)** QUANDO o comando de finalizar chegar ao celular, ENTÃO o celular DEVE gravar o treino
-  pelo fluxo existente (`buildCompletedWorkout` / PRs / progressão), exatamente como pela tela.
+- **RW-5.2 (P1) (R2)** QUANDO o evento de finalizar for aplicado no celular, ENTÃO o celular DEVE gravar
+  o treino pelo fluxo existente da tela (Finish e salvar), exatamente como por um toque. O relógio
+  DEVE mostrar o resumo (duração, séries, PRs) ao finalizar.
 - **RW-5.3 (P1)** O relógio NÃO DEVE descartar treinos. Descartar continua exclusivo do celular.
 - **RW-5.4 (P1)** QUANDO o treino for finalizado ou descartado no celular, ENTÃO o relógio DEVE voltar à
   tela de espera e encerrar a Ongoing Activity.
@@ -226,22 +238,34 @@ celular.
   DEVE criar a Ongoing Activity sem o usuário abrir o app (abrir a tela automaticamente é
   opcional, ver P-6).
 
+**História RW-8 (P2, R2).** Como usuário, quero começar o treino do dia pelo relógio, sem tirar o
+celular do bolso.
+
+- **RW-8.1 (P2)** ENQUANTO não houver treino ativo, o relógio DEVE oferecer as sessões prontas que
+  o snapshot traz (`ready`: a de hoje e outras rotinas). Ao iniciar uma, o relógio DEVE conduzir a
+  sessão e enviar o evento `start`, que o celular aplica com o mesmo início do app.
+- **RW-8.2 (P2)** SE a pesagem antes do treino estiver ligada no app, ENTÃO o relógio DEVE pedi-la
+  ao iniciar por ele (`weighIn`).
+
 ---
 
 ### RS — Sincronização
 
 **História RS-1.** Como usuário, quero que o que faço num lado apareça no outro rapidamente.
 
-- **RS-1.1 (P1)** ENQUANTO celular e relógio estiverem conectados, toda ação feita num lado DEVE
-  aparecer no outro em até **2 s** (p95), inclusive com a tela do celular apagada e o app em
-  segundo plano.
+- **RS-1.1 (P1) (R2)** Uma ação no relógio DEVE aparecer no próprio relógio na hora. Ela DEVE aparecer no
+  celular em até **2 s** (p95) com o openGym em primeiro plano. Com o celular bloqueado ou o app em
+  segundo plano, DEVE aparecer **ao abrir o openGym**, sem perda. Uma mudança no celular DEVE
+  chegar ao relógio conectado em até 2 s.
 - **RS-1.2 (P1)** O celular DEVE ser a fonte da verdade. O estado exibido no relógio DEVE sempre convergir
   para o snapshot mais recente do celular.
-- **RS-1.3 (P1)** A ponte DEVE usar a Wearable Data Layer API: `DataClient` para o snapshot do treino
-  ativo e `MessageClient` para comandos.
-- **RS-1.4 (P1)** A ponte no celular DEVE ser um plugin Capacitor nativo em Kotlin que expõe ao JS:
-  (a) eventos de comando vindos do relógio; (b) um método para publicar o snapshot.
-- **RS-1.5 (P1)** Toda mensagem e todo snapshot DEVEM carregar uma versão de protocolo. QUANDO um lado
+- **RS-1.3 (P1) (R2)** A ponte DEVE usar a Wearable Data Layer API: `DataClient` para o snapshot e para
+  cada evento do relógio (itens duráveis), e `MessageClient` só para avisos sem estado.
+- **RS-1.4 (P1) (R2)** A ponte no celular DEVE ser um plugin Capacitor nativo em Kotlin com a mesma
+  interface JS do plugin `WatchBridge` do upstream (`status`, `sendSnapshot`, `drain`, `ack`,
+  `openOnWatch`, `sendClips`/`dropClips` sem efeito, eventos `watchEvent` e `watchState`), para o
+  JS do upstream rodar sem cópia.
+- **RS-1.5 (P1) (R2: a versão é o `v` do snapshot do upstream)** Toda mensagem e todo snapshot DEVEM carregar uma versão de protocolo. QUANDO um lado
   receber uma versão incompatível, ENTÃO ele DEVE ignorar a mensagem e mostrar "atualize o app
   do relógio/celular".
 - **RS-1.6 (P1)** Celular e relógio DEVEM ter o mesmo `applicationId` e a mesma chave de assinatura
@@ -253,9 +277,10 @@ bolso e a tela apagada.
 - **RS-2.1 (P1)** QUANDO um comando chegar do relógio com a WebView suspensa ou o app em segundo
   plano, ENTÃO ele NÃO DEVE ser perdido. Ele DEVE ser aplicado na ordem de chegada, assim que o
   JS puder processar, dentro de RS-1.1 sempre que o design permitir.
-- **RS-2.2 (P1)** O design DEVE comparar ao menos duas abordagens para esse risco (ex.: foreground
+- **RS-2.2 (P1) (R2: cumprido)** O design DEVE comparar ao menos duas abordagens para esse risco (ex.: foreground
   service durante todo o treino; fila durável no nativo com timer autônomo no relógio e
-  reconciliação) e justificar a escolha.
+  reconciliação) e justificar a escolha. A comparação foi medida no spike M2.1 (`FORK.md`,
+  `design.md` §6).
 - **RS-2.3 (P1)** Toda a lógica de treino DEVE continuar em JavaScript (`frontend/src/lib/` e o fluxo
   existente). O Kotlin só transporta, enfileira e mostra dados.
 
@@ -281,16 +306,17 @@ bolso e a tela apagada.
 - **RO-1.3 (P1)** ENQUANTO desconectado, o timer de descanso do relógio DEVE funcionar sozinho (iniciar
   ao concluir série, ±15s, pular, vibrar no fim), usando a duração de descanso que veio no
   último snapshot.
-- **RO-1.4 (P1)** QUANDO a conexão voltar, ENTÃO o relógio DEVE reenviar os comandos pendentes em ordem.
-  Depois de o celular aplicá-los, o relógio DEVE adotar o snapshot do celular.
-- **RO-1.5 (P1)** O design DEVE definir a regra de conflito para ações feitas nos dois lados enquanto
-  desconectados (ex.: a mesma série editada nos dois) e o que o usuário vê quando um comando
-  for rejeitado.
+- **RO-1.4 (P1) (R2)** QUANDO a conexão voltar, ENTÃO os eventos pendentes DEVEM chegar ao celular em ordem
+  (sincronização da Data Layer). Depois de o celular aplicá-los, o relógio DEVE adotar o snapshot do
+  celular, mantendo os próprios ticks até o snapshot confirmá-los.
+- **RO-1.5 (P1) (R2)** A regra de conflito DEVE ser a do upstream: a mesma série mudada nos dois lados
+  → vence a mudança com o `at` mais recente, nos dois lados.
 - **RO-1.6 (P1)** A fila offline do relógio DEVE sobreviver ao fechamento do app e ao reinício do
   relógio.
-- **RO-1.7 (P1)** SE o treino já tiver sido finalizado ou descartado no celular quando a fila for
-  reenviada, ENTÃO os comandos pendentes DEVEM ser descartados com aviso no relógio, sem
-  alterar treinos já gravados.
+- **RO-1.7 (P1) (R2)** SE o treino tiver sido finalizado no celular enquanto o relógio estava longe, ENTÃO
+  as séries marcadas no relógio nesse meio-tempo DEVEM ser gravadas naquele treino salvo (como o
+  upstream faz), sem alterar nenhum outro treino. SE ele tiver sido descartado, ENTÃO elas DEVEM
+  ser ignoradas.
 
 ---
 
@@ -357,7 +383,8 @@ bolso e a tela apagada.
   oficial.
 - Iniciar um treino pelo relógio, montar rotinas ou ver histórico/estatísticas no relógio.
 - Tiles e complicações do Wear OS (além da Ongoing Activity).
-- Funcionamento do relógio sem celular por perto desde o início do treino (modo standalone).
+- Funcionamento do relógio sem celular por perto desde o início do treino (modo standalone),
+  exceto o início pelo relógio do RW-8 (P2), que usa as sessões prontas do último snapshot.
 - Mudanças em `api/`, `web/`, `helm/`, `kubernetes/`, Docker e CI do upstream.
 - Alterar a lógica de treino em `frontend/src/lib/` (só código novo que a usa).
 - Tradução da UI do relógio para todos os idiomas do upstream. O relógio terá pt-BR e inglês.
@@ -378,3 +405,5 @@ Aprovadas pelo dono em 2026-10-13, com as recomendações do assistente.
 | D-8 | `applicationId` | `com.cezar.opengym` (release) e `com.cezar.opengym.test` (debug), iguais no celular e no relógio. |
 | D-9 | Specs públicos | Sim, no fork público `Cezarmvm/openGym`. |
 | D-10 | Nome visível do app | "openGym", sem sufixo (decisão do dono em 2026-10-14). O fork se distingue do oficial só pelo `applicationId`. |
+| D-11 | Como o JS do relógio do upstream entra no fork (R2) | **Pendente.** (a) `merge` do branch `upstream/watch` no `fork/main` agora (recomendado) ou (b) um branch de integração até o upstream lançar. Ver `design.md` §14.1. |
+| D-12 | Formato da sincronização (R2) | O do upstream (Apple Watch): relógio autônomo, eventos `setDone`/`finish`/`start`, fila durável aplicada quando o celular abre. Decisão do dono em 2026-10-14, depois do spike M2.1. |
