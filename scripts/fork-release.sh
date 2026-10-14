@@ -105,7 +105,7 @@ echo "forkBuild: $FORK_BUILD"
 # ── Tests ───────────────────────────────────────────────────────────────────────────────────────
 if [ $SKIP_TESTS -eq 0 ]; then
   step 'tests (fork)'
-  (cd "$FRONTEND" && npx vitest run src/watch)
+  (cd "$FRONTEND" && npx vitest run src/watch src/lib/import-csv.pt-br.test.js)
 fi
 
 # ── Mobile web build (what `npm run build:mobile` does; its VAR=value syntax breaks in cmd) ──────
