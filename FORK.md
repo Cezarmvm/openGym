@@ -22,6 +22,8 @@ Toda mudança em arquivo do upstream é marcada com `FORK:` no comentário. Para
 | `frontend/src/lib/update.js` | `REPO = 'Cezarmvm/openGym'`: o verificador só olha as releases do fork | manter a constante do fork |
 | `frontend/src/lib/update.test.js` | a URL esperada passa a ser a do fork (linha marcada) | idem |
 | `frontend/src/lib/import-csv.js` | `parseWhen` aceita "de" entre dia, mês e ano ("4 de mar. de 2026"), formato do Hevy em português/espanhol. Teste: `import-csv.pt-br.test.js` | manter o `(?:de\s+)?` na regex dia-mês-ano |
+| `frontend/src/lib/health-sync.js` | Health Connect recebe só os treinos iniciados depois de ligar a opção (`since` no `opengym-health.json`; filtro em `src/fork/health-since.js`). 3 linhas marcadas | reaplicar `onlySince(...)` no `planSync` do `syncOnce` e o `since` no `enableHealth` |
+| `frontend/src/lib/health-sync.test.js` | relógio dos testes fixado antes dos treinos de exemplo, para manter os casos do upstream | manter as 2 linhas FORK no `beforeEach` |
 
 ## Build do fork (Gradle)
 

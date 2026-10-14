@@ -9,6 +9,7 @@
 // The web build never gets here (MOBILE is a build-time flag), and iOS answers 'unsupported'.
 import { MOBILE, isAndroid, readJsonFile, writeJsonFile } from './mobile.js'
 import { healthRecords, planSync, writtenIds } from './health-connect.js'
+import { onlySince } from '../fork/health-since.js' // FORK: new workouts only
 import { exerciseNameFor } from './i18n-core.js'
 import { EXIDX } from './exercises.js'
 import { speedUnitOf } from './speed.js'
@@ -93,7 +94,7 @@ export function syncHealth(S) {
 async function syncOnce(S, h) {
   const p = await plugin()
   if (!p) return h
-  const plan = planSync(healthRecords(S, { nameOf, speedUnit: speedUnitOf(S) }), h.written)
+  const plan = planSync(onlySince(healthRecords(S, { nameOf, speedUnit: speedUnitOf(S) }), h.since), h.written) // FORK: new workouts only
   const nothing = !plan.sessions.length && !plan.weights.length && !plan.remove.sessions.length && !plan.remove.weights.length
   if (nothing) {
     if (!h.error) return h
@@ -136,7 +137,7 @@ export async function enableHealth(S) {
   const granted = st.granted || (await p.HC.requestPermissions().catch(() => ({ granted: false }))).granted
   if (!granted) return { ok: false, reason: 'denied' }
   const h = await loadHealth()
-  await saveHealth({ ...h, on: true, error: null })
+  await saveHealth({ ...h, on: true, error: null, since: h.since || Date.now() }) // FORK: remember when, so older workouts stay out
   const after = await syncHealth(S)
   return { ok: !after?.error, reason: after?.error || null, health: after }
 }

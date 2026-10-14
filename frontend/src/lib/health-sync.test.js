@@ -45,6 +45,9 @@ let hs
 beforeEach(async () => {
   vi.resetModules()
   h.files.clear(); h.calls = []; h.status = { status: 'available', granted: false }; h.grant = true; h.fail = null
+  // FORK: Health Connect only gets workouts started after it was turned on (src/fork/health-since.js);
+  // turning it on before these September workouts keeps every case below as upstream wrote it.
+  vi.useFakeTimers({ toFake: ['Date'] }); vi.setSystemTime(new Date(2026, 7, 1))
   hs = await import('./health-sync.js')
 })
 
