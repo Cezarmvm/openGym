@@ -24,7 +24,7 @@ Toda mudança em arquivo do upstream é marcada com `FORK:` no comentário. Para
 
 ## Build do fork (Gradle)
 
-- `fork/android/fork-app.gradle`: `applicationId com.cezar.opengym` (debug: `.test`) e nome "openGym (Cezar)" via `fork/android/release-res`.
+- `fork/android/fork-app.gradle`: `applicationId com.cezar.opengym` (debug: `.test`) O nome visível continua "openGym", igual ao upstream (D-10).
 - `fork/android/fork-version.gradle`: `versionCode = upstream × 1000 + forkBuild`, `versionName = <upstream>-cezar.<forkBuild>`. O `forkBuild` fica em `fork/android/version.properties` e nunca zera. A task `forkVersionCheck` compara com `fork/android/last-version-code`.
 - `fork/android/fork-signing.gradle`: lê `fork/keystore.properties` (ou `$OPENGYM_KEYSTORE_PROPERTIES`), assina v1+v2+v3, e o release falha sem ele (`forkCheckSigning`).
 

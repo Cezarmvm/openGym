@@ -29,8 +29,8 @@ Termina com: APK `com.cezar.opengym` assinado com a chave do dono, instalado no 
   - Req: RB-9.2, RB-9.3, design §9.1
 
 - [x] **M1.3 — `applicationId` e nome visível**
-  - Arquivos: `fork/android/fork-app.gradle`, `fork/android/release-res/values/strings.xml`
-  - Aceite: `aapt2 dump badging` do release mostra `package: name='com.cezar.opengym'` e `application-label:'openGym (Cezar)'`. O debug mostra `com.cezar.opengym.test`. O `namespace` continua `ch.duartesantos.opengym`.
+  - Arquivos: `fork/android/fork-app.gradle` (a sobreposição `release-res` foi removida pela D-10)
+  - Aceite: `aapt2 dump badging` do release mostra `package: name='com.cezar.opengym'` e `application-label:'openGym'` (D-10). O debug mostra `com.cezar.opengym.test`. O `namespace` continua `ch.duartesantos.opengym`.
   - Req: RB-1.1, RB-1.3, D-8
 
 - [x] **M1.4 — Versionamento automático**
@@ -72,7 +72,7 @@ Termina com: APK `com.cezar.opengym` assinado com a chave do dono, instalado no 
   - Arquivos: nenhum (execução), `FORK.md` (registro)
   - Aceite: `fork-release --install` gera e instala a versão N. O dono importa o backup e cria um dado. Uma segunda execução gera N+1, e `adb install -r` instala por cima sem desinstalar. Os dados continuam lá. O app oficial (se instalado) continua intacto ao lado.
   - Req: RB-1.2, RB-7.1, RB-7.2, RT-4
-  - **Checklist manual M1 (o dono):** (1) o app abre como "openGym (Cezar)"; (2) importar o backup do oficial; (3) Settings → Sobre → "procurar atualização" diz que não há atualização, sem erro; (4) instalar N+1 por cima: dados preservados; (5) o app oficial continua abrindo com os próprios dados.
+  - **Checklist manual M1 (o dono):** (1) o app abre como "openGym"; (2) importar o backup do oficial; (3) Settings → Sobre → "procurar atualização" diz que não há atualização, sem erro; (4) instalar N+1 por cima: dados preservados; (5) o app oficial continua abrindo com os próprios dados.
 
 **🛑 PARE — fim do M1. Aguardar confirmação do dono.**
 

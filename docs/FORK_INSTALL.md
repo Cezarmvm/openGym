@@ -1,8 +1,9 @@
 # Instalação do openGym (Cezar): celular e Galaxy Watch
 
-Guia do fork `Cezarmvm/openGym`. O app do fork se chama **openGym (Cezar)**
-(`com.cezar.opengym`) e convive com o app oficial (`ch.duartesantos.opengym`): são dois apps
-separados, cada um com seus próprios dados.
+Guia do fork `Cezarmvm/openGym`. O app do fork aparece no celular como **openGym**, o mesmo nome do oficial, mas tem um id
+próprio (`com.cezar.opengym`). Por isso pode conviver com o app oficial (`ch.duartesantos.opengym`):
+são dois apps separados, cada um com seus próprios dados. Se instalar os dois, eles aparecem com o
+mesmo nome. O do fork é o que você instalou pelo script.
 
 > Os passos com menus da Samsung foram escritos para a One UI em português. Os nomes podem variar
 > um pouco entre versões.
@@ -98,7 +99,7 @@ Como o app não vem da Play Store, o Play Protect pode mostrar **"App não segur
 1. No **app oficial**: **Configurações → Dados e backup → Exportar backup**. O arquivo
    `opengym-backup-AAAA-MM-DD.json` sai pela tela de compartilhamento. Salve em "Meus Arquivos" ou
    no Drive.
-2. No **openGym (Cezar)**: **Configurações → Dados e backup → Importar backup** → escolha o arquivo.
+2. No **openGym** do fork: **Configurações → Dados e backup → Importar backup** → escolha o arquivo.
 
 > Se o oficial usava fotos e vídeos em exercícios próprios, use **Exportar com fotos e vídeos
 > (.zip)** e importe o `.zip`.
@@ -107,7 +108,7 @@ Como o app não vem da Play Store, o Play Protect pode mostrar **"App não segur
 O openGym já importa o CSV do Hevy:
 1. No **Hevy**: **Perfil → Configurações → Exportar e importar dados → Exportar treinos**. Isso gera
    um `workouts.csv`.
-2. No **openGym (Cezar)**: **Configurações → Dados e backup → Importar de outro app** → escolha o
+2. No **openGym** do fork: **Configurações → Dados e backup → Importar de outro app** → escolha o
    CSV → revise o resumo → confirme.
 
 Os exercícios são reconhecidos pelo nome em inglês do Hevy. O resumo mostra o que não foi
@@ -118,9 +119,9 @@ reconhecido antes de você confirmar.
 A sincronização com o relógio precisa que o app continue rodando durante o treino com a tela
 apagada. A Samsung costuma "adormecer" apps:
 
-1. **Configurações → Aplicativos → openGym (Cezar) → Bateria → Sem restrições**.
+1. **Configurações → Aplicativos → openGym → Bateria → Sem restrições**.
 2. **Configurações → Assistência do aparelho → Bateria → Limites de uso em segundo plano**: o
-   openGym (Cezar) **não** pode estar em "Apps em suspensão" nem em "Apps em suspensão profunda".
+   openGym **não** pode estar em "Apps em suspensão" nem em "Apps em suspensão profunda".
 3. Notificações do app ligadas (para o descanso e para o "Treino em andamento").
 
 ## 7. Preparar o Galaxy Watch

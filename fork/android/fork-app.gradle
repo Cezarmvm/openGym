@@ -9,11 +9,7 @@ apply from: new File(forkAndroidDir, 'fork-signing.gradle')
 
 android {
     defaultConfig {
+        // The visible name stays upstream's "openGym" (owner's call, D-10); only the id differs.
         applicationId 'com.cezar.opengym'
-    }
-    sourceSets {
-        // Visible name "openGym (Cezar)" for the release build; the debug build keeps upstream's
-        // own test name from src/debug/res.
-        release.res.srcDirs += new File(forkAndroidDir, 'release-res').path
     }
 }

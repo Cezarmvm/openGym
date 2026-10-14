@@ -479,13 +479,12 @@ fork/android/
 ├─ fork-app.gradle            applicationId, nome, signingConfig, versão, deps do bridge
 ├─ fork-signing.gradle        lê keystore.properties (compartilhado por app e wear)
 ├─ fork-version.gradle        calcula versionCode/versionName (compartilhado)
-├─ release-res/values/strings.xml   app_name = "openGym (Cezar)"
 └─ version.properties         forkBuild=<contador>
 ```
 
 `fork-app.gradle` (aplicado no fim do `app/build.gradle`, quando o `defaultConfig` do upstream já foi lido):
 - `android.defaultConfig.applicationId = "com.cezar.opengym"`. O `namespace` continua `ch.duartesantos.opengym`, então nenhum pacote Java muda. O debug mantém `applicationIdSuffix ".test"` do upstream [RB-1.1, RB-1.3].
-- Nome: `sourceSets.release.res.srcDirs += 'fork/android/release-res'` sobrepõe `app_name`/`title_activity_main` só no release, do mesmo jeito que o upstream faz no debug com `src/debug/res`. No debug, o upstream já mostra o próprio nome de teste.
+- Nome: o release mantém o "openGym" do upstream (D-10). O debug mostra o nome de teste do upstream.
 - `dependencies { implementation project(':fork-wearbridge') }`.
 - Assinatura e versão (abaixo).
 
@@ -535,7 +534,7 @@ O `cap sync` no Windows reescreve dois arquivos Gradle com CRLF e eles aparecem 
 | `frontend/src/views/Settings.jsx` | renderiza `<WatchSettingsCard/>` na página do app | 1–2 |
 | `frontend/src/lib/update.js` | `REPO` do fork | 1 |
 | `.gitignore` | bloco FORK | ~6 |
-| `frontend/android/app/src/main/res/...` | **nada** (sobreposição via `release-res`) | 0 |
+| `frontend/android/app/src/main/res/...` | **nada** (o nome visível continua o do upstream, D-10) | 0 |
 
 Arquivos novos: `FORK.md`, `docs/FORK_INSTALL.md`, `fork/**`, `scripts/fork-release.*`, `frontend/src/watch/**`, `frontend/android/{fork-protocol,fork-wearbridge,wear}/**`, `specs/fork-watch/**`.
 

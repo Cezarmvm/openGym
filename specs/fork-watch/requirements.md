@@ -49,7 +49,7 @@ e **SE** para condições indesejadas. Prioridade: **P1** (obrigatório) ou **P2
 para usar o fork lado a lado com o app oficial, sem conflito de assinatura.
 
 - **RB-1.1 (P1)** QUANDO o APK release do celular for gerado, ENTÃO ele DEVE ter `applicationId`
-  `com.cezar.opengym` e nome visível "openGym (Cezar)".
+  `com.cezar.opengym` e nome visível "openGym", igual ao upstream (D-10; antes "openGym (Cezar)").
 - **RB-1.2 (P1)** QUANDO o APK do fork for instalado num aparelho que tem o app oficial
   (`ch.duartesantos.opengym`), ENTÃO os dois DEVEM coexistir, cada um com seus próprios dados.
 - **RB-1.3 (P1)** QUANDO o build debug for gerado, ENTÃO ele DEVE continuar com sufixo próprio
@@ -377,3 +377,4 @@ Aprovadas pelo dono em 2026-10-13, com as recomendações do assistente.
 | D-7 | Incremento de carga | O mesmo passo que o celular usa no stepper do exercício (`weightIncrement`), calculado no JS e enviado no snapshot. |
 | D-8 | `applicationId` | `com.cezar.opengym` (release) e `com.cezar.opengym.test` (debug), iguais no celular e no relógio. |
 | D-9 | Specs públicos | Sim, no fork público `Cezarmvm/openGym`. |
+| D-10 | Nome visível do app | "openGym", sem sufixo (decisão do dono em 2026-10-14). O fork se distingue do oficial só pelo `applicationId`. |
