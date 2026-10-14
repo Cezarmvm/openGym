@@ -146,7 +146,7 @@ Termina com: um app Wear mínimo mostra o treino ativo (texto) e um botão "conc
   - Aceite: compila `:wear:assembleRelease`, compara o SHA-256 dos certificados dos dois APKs (falha se diferentes, testado assinando um com a keystore de teste), confere o pacote e o `versionCode` iguais via `aapt2`, copia `openGym-Cezar-watch-*.apk`. `--install` detecta o relógio por `ro.build.characteristics` ou usa `--watch SERIAL`. Também roda os testes Kotlin.
   - Req: RB-6.1 (2–6), RS-1.6
 
-- [ ] **M2.12 — 🛑 Parear o relógio por adb + identificar Wear OS**
+- [x] **M2.12 — 🛑 Parear o relógio por adb + identificar Wear OS**
   - Arquivos: `FORK.md` (Aparelhos), `docs/FORK_INSTALL.md` (seção relógio: opções de desenvolvedor, depuração sem fio, `adb pair`/`adb connect`, instalar o APK)
   - Aceite: o dono ativa a depuração sem fio no relógio e informa IP:porta e o código de pareamento. O assistente roda `adb pair` e `adb connect` e registra a versão de Wear OS/SDK. Se o SDK do relógio for < 30, PARE e revise o D-1.
   - Req: RB-5.2, RB-8.1, D-1

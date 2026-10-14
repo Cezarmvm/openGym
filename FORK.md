@@ -78,7 +78,7 @@ Essas falhas são a referência: o fork não pode adicionar falhas novas (RT-3).
 | Aparelho | Modelo | Sistema | Observações |
 |---|---|---|---|
 | Celular | Samsung Galaxy S25 Ultra (`SM-S938B`, `pa3q`) | Android 17 (SDK 37), One UI 9.0, build `S938BXXUCDZIF` | SDK ≥ 36: Live Updates / Now Bar viáveis (P2, D-2) |
-| Relógio | Galaxy Watch 4 Classic | _(M2.12)_ | |
+| Relógio | Galaxy Watch 4 Classic (`SM-R890`, `wisebl`) | Wear OS 6 / Android 16 (SDK 36), build `R890XXS2JZG3` | Tela 450×450. Depuração só por Wi-Fi (`adb pair` + `adb connect`); o Wi-Fi do relógio cai com o Bluetooth do celular ligado |
 
 Keystore do fork: `C:\Users\Cezar\keys\opengym-cezar.jks`, alias `opengym-cezar`, certificado SHA-256
 `70:F8:BD:74:05:75:EF:43:37:85:3D:B6:3F:40:CE:35:A2:AF:D3:2D:25:94:BE:0E:25:C9:6E:58:2E:47:BF:D2`.

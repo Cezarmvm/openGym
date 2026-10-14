@@ -131,12 +131,14 @@ apagada. A Samsung costuma "adormecer" apps:
 1. No relógio: **Configurações → Sobre o relógio → Software** → toque **5 vezes** em
    **Versão do software**. Aparece "Modo desenvolvedor ativado".
 2. **Configurações → Opções do desenvolvedor** → ligue **Depuração ADB** e
-   **Depurar via Wi-Fi**. O relógio e o PC precisam estar na **mesma rede Wi-Fi**. Desligue o
-   Bluetooth do relógio se o Wi-Fi não conectar.
+   **Depurar via Wi-Fi**. O relógio e o PC precisam estar na **mesma rede Wi-Fi** (não uma rede
+   de convidados). Com o celular ligado por Bluetooth, o relógio desliga o Wi-Fi para poupar
+   bateria: se ele ficar caindo, desligue o **Bluetooth do celular** durante o pareamento.
 3. Em **Depurar via Wi-Fi**, toque em **Parear novo dispositivo**. O relógio mostra um
    **código de 6 dígitos** e **IP:porta** de pareamento.
 4. No PC:
    ```powershell
+   adb mdns services             # mostra as duas portas: _adb-tls-pairing e _adb-tls-connect
    adb pair <IP>:<porta-de-pareamento> <código>
    adb connect <IP>:<porta>      # a porta da tela principal de "Depurar via Wi-Fi" (não a de pareamento)
    adb devices                   # o relógio aparece como <IP>:<porta>  device
