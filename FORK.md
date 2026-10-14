@@ -83,3 +83,15 @@ Essas falhas são a referência: o fork não pode adicionar falhas novas (RT-3).
 Keystore do fork: `C:\Users\Cezar\keys\opengym-cezar.jks`, alias `opengym-cezar`, certificado SHA-256
 `70:F8:BD:74:05:75:EF:43:37:85:3D:B6:3F:40:CE:35:A2:AF:D3:2D:25:94:BE:0E:25:C9:6E:58:2E:47:BF:D2`.
 O fingerprint é público: ele só identifica a chave, não dá acesso a ela.
+
+## Health Connect (specs/fork-health), verificado no S25 Ultra em 2026-10-14
+
+- **Gravar:** ligado em 1.4.1-cezar.3, com permissões de gravação de exercício e peso. Só vão
+  treinos iniciados depois de ligar (`since`). Os 23 treinos importados do Hevy não foram enviados.
+- **Ler:** ligado em 1.4.1-cezar.5, com leitura de peso, gordura corporal e histórico. A
+  primeira leitura trouxe **33 registros** (25 pesagens desde maio/2025 e 8 de gordura corporal).
+  A pesagem lançada no openGym em 09/10 (66,6 kg) foi mantida.
+- O Samsung Health tem `READ_EXERCISE`/`READ_WEIGHT` (lê o que o openGym grava) e grava peso,
+  gordura e FC no Health Connect. Não grava massa magra, água nem massa óssea.
+- **Pendente (HW-2.1):** confirmar, depois do primeiro treino finalizado no openGym, se ele
+  aparece no histórico de exercícios do Samsung Health.

@@ -28,7 +28,7 @@
   - Aceite: liga e desliga, pede as permissões, mostra a última leitura e a contagem. Teste de componente (happy-dom) no estilo dos `sheets.*.test.jsx`.
   - Req: HR-3
 
-- [ ] **H6: Release + checklist no S25**
+- [x] **H6: Release + checklist no S25** (itens 1, 2, 4 e 5 ok em 2026-10-14; o HW-2.1 aguarda o primeiro treino real)
   - Aceite (o assistente executa pelo cabo e o dono confirma): os 5 itens do design §6, mais HW-2.1 (o treino do openGym aparece no Samsung Health). O resultado vai para o `FORK.md`.
   - Req: HW-2, HQ-3
 
