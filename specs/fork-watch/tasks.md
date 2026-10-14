@@ -43,7 +43,7 @@ Termina com: APK `com.cezar.opengym` assinado com a chave do dono, instalado no 
   - Aceite: (a) sem `keystore.properties`, `assembleRelease` falha na task `forkCheckSigning` com a mensagem apontando o guia. (b) Com uma keystore **de teste** gerada pelo assistente em `%TEMP%` (descartada depois), `assembleRelease` gera `app-release.apk` e `apksigner verify -v` mostra v1, v2 e v3 = true. Nada de debug key.
   - Req: RB-2.1, RB-2.2, RB-2.3, design §9.2
 
-- [ ] **M1.6 — 🛑 Keystore real do dono**
+- [x] **M1.6 — 🛑 Keystore real do dono**
   - Arquivos: nenhum no repo. Fica em `C:\Users\Cezar\keys\opengym-cezar.jks` e `fork/keystore.properties` (ignorado).
   - Aceite: o assistente mostra o comando `keytool` exato (design §9.2) e espera. O dono roda e preenche `fork/keystore.properties` a partir do `.example`. O assistente confere `git status` (nada novo rastreado) e `keytool -list` (alias certo). O assistente lembra do **backup da keystore e das senhas** (cópia fora do PC, ex.: pendrive + gerenciador de senhas).
   - Req: RB-2.4, RB-2.5
@@ -58,7 +58,7 @@ Termina com: APK `com.cezar.opengym` assinado com a chave do dono, instalado no 
   - Aceite: no Windows, `scripts/fork-release.ps1` (e `bash scripts/fork-release.sh`) faz: checagem de ferramentas → incremento do `forkBuild` → build mobile equivalente ao `build:mobile` → `:app:assembleRelease` → `apksigner verify --print-certs` → `aapt2 dump badging` (confere o pacote) → copia para `dist-apk/openGym-Cezar-phone-<vn>-<vc>.apk` + `.sha256` → commit `chore(fork): release <vn>`. Qualquer erro sai com código ≠ 0 e o nome da etapa (testado forçando a falta do `keystore.properties`). `--install` instala com `adb install -r`. O suporte ao relógio fica reservado (flags aceitas, etapa ignorada até o M2).
   - Req: RB-6.1 (1, 3–6), RB-6.2, design §9.5
 
-- [ ] **M1.9 — Identificar o celular**
+- [x] **M1.9 — Identificar o celular**
   - Arquivos: `FORK.md` (seção "Aparelhos")
   - Aceite: com o celular em depuração USB, registrar `ro.product.model`, `ro.build.version.release`/`sdk` e a versão do One UI (`ro.build.version.oneui`). Isso decide a viabilidade do P2 da Now Bar (D-2).
   - Req: D-2, RB-5

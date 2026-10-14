@@ -69,4 +69,11 @@ Essas falhas são a referência: o fork não pode adicionar falhas novas (RT-3).
 
 ## Aparelhos
 
-_(preenchido nas tarefas M1.9 e M2.12)_
+| Aparelho | Modelo | Sistema | Observações |
+|---|---|---|---|
+| Celular | Samsung Galaxy S25 Ultra (`SM-S938B`, `pa3q`) | Android 17 (SDK 37), One UI 9.0, build `S938BXXUCDZIF` | SDK ≥ 36: Live Updates / Now Bar viáveis (P2, D-2) |
+| Relógio | Galaxy Watch 4 Classic | _(M2.12)_ | |
+
+Keystore do fork: `C:\Users\Cezar\keys\opengym-cezar.jks`, alias `opengym-cezar`, certificado SHA-256
+`70:F8:BD:74:05:75:EF:43:37:85:3D:B6:3F:40:CE:35:A2:AF:D3:2D:25:94:BE:0E:25:C9:6E:58:2E:47:BF:D2`.
+O fingerprint é público: ele só identifica a chave, não dá acesso a ela.
