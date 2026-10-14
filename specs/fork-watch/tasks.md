@@ -53,7 +53,7 @@ Termina com: APK `com.cezar.opengym` assinado com a chave do dono, instalado no 
   - Aceite: `REPO = 'Cezarmvm/openGym'`. Um teste vitest novo (`frontend/src/watch/fork-update.test.js`) confirma que `LATEST_URL` aponta para o fork. A suíte do upstream continua com o mesmo resultado de antes (5054/5055 e as mesmas 2 falhas conhecidas).
   - Req: RB-4.1, RB-4.2, D-3
 
-- [ ] **M1.8 — Script de release (fase celular)**
+- [x] **M1.8 — Script de release (fase celular)**
   - Arquivos: `scripts/fork-release.sh`, `scripts/fork-release.ps1`
   - Aceite: no Windows, `scripts/fork-release.ps1` (e `bash scripts/fork-release.sh`) faz: checagem de ferramentas → incremento do `forkBuild` → build mobile equivalente ao `build:mobile` → `:app:assembleRelease` → `apksigner verify --print-certs` → `aapt2 dump badging` (confere o pacote) → copia para `dist-apk/openGym-Cezar-phone-<vn>-<vc>.apk` + `.sha256` → commit `chore(fork): release <vn>`. Qualquer erro sai com código ≠ 0 e o nome da etapa (testado forçando a falta do `keystore.properties`). `--install` instala com `adb install -r`. O suporte ao relógio fica reservado (flags aceitas, etapa ignorada até o M2).
   - Req: RB-6.1 (1, 3–6), RB-6.2, design §9.5
