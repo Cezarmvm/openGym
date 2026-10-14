@@ -1,0 +1,121 @@
+{
+  "v": 1,
+  "unit": "lb",
+  "restSec": 90,
+  "ready": null,
+  "active": {
+    "id": "w-mix",
+    "name": "Mixed",
+    "unit": "lb",
+    "cur": 0,
+    "restSec": 90,
+    "rest": null,
+    "entries": [
+      {
+        "id": "0576",
+        "name": "lever chest press",
+        "mode": "reps",
+        "restSec": null,
+        "last": null,
+        "sets": [
+          {
+            "w": 20,
+            "r": 16,
+            "sec": null,
+            "done": false,
+            "warmup": false,
+            "sides": {
+              "L": {
+                "w": 20,
+                "r": 8,
+                "done": false
+              },
+              "R": {
+                "w": 20,
+                "r": 8,
+                "done": false
+              }
+            }
+          },
+          {
+            "w": 20,
+            "r": 16,
+            "sec": null,
+            "done": false,
+            "warmup": false,
+            "sides": {
+              "L": {
+                "w": 20,
+                "r": 8,
+                "done": false
+              },
+              "R": {
+                "w": 20,
+                "r": 8,
+                "done": false
+              }
+            }
+          }
+        ],
+        "perSide": true,
+        "step": 5
+      },
+      {
+        "id": "0031",
+        "name": "barbell curl",
+        "mode": "time",
+        "restSec": null,
+        "last": null,
+        "sets": [
+          {
+            "w": null,
+            "r": null,
+            "sec": 45,
+            "done": false,
+            "warmup": false
+          },
+          {
+            "w": null,
+            "r": null,
+            "sec": 45,
+            "done": false,
+            "warmup": false
+          }
+        ]
+      },
+      {
+        "id": "0246",
+        "name": "cable upright row",
+        "mode": "cardio",
+        "restSec": null,
+        "last": null,
+        "sets": [
+          {
+            "w": null,
+            "r": null,
+            "sec": null,
+            "done": false,
+            "warmup": false
+          }
+        ]
+      }
+    ]
+  },
+  "settings": {
+    "health": false,
+    "restHaptics": true,
+    "crown": "reps",
+    "show": {
+      "clip": true,
+      "hr": true,
+      "last": true,
+      "elapsed": false,
+      "kcal": false,
+      "next": true,
+      "rest": "ring"
+    },
+    "lang": "pt",
+    "weighIn": true,
+    "lastBw": 66.6
+  }
+}

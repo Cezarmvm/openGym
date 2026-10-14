@@ -1,0 +1,22 @@
+// FORK (specs/fork-watch R2): the watch's session as pure Kotlin, a port of upstream's
+// ios/App/WatchCore (Model.swift, SessionCore.swift). No Android here, so it runs on the JVM:
+// ./gradlew :watch-core:test
+apply plugin: 'org.jetbrains.kotlin.jvm'
+apply plugin: 'org.jetbrains.kotlin.plugin.serialization'
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
+    }
+}
+
+dependencies {
+    api "org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0"
+    testImplementation "junit:junit:4.13.2"
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:2.2.20"
+}

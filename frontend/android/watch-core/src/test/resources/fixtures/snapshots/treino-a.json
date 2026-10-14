@@ -1,0 +1,300 @@
+{
+  "v": 1,
+  "unit": "kg",
+  "restSec": 90,
+  "ready": null,
+  "active": {
+    "id": "w-treino-a",
+    "name": "Treino A",
+    "start": 1760530000000,
+    "unit": "kg",
+    "cur": 1,
+    "restSec": 90,
+    "rest": {
+      "endsAt": 1760530290000
+    },
+    "entries": [
+      {
+        "id": "0576",
+        "name": "lever chest press",
+        "mode": "reps",
+        "restSec": null,
+        "last": null,
+        "sets": [
+          {
+            "w": 20,
+            "r": 12,
+            "sec": null,
+            "done": true,
+            "warmup": true,
+            "at": 1760530100000
+          },
+          {
+            "w": 40,
+            "r": 10,
+            "sec": null,
+            "done": true,
+            "warmup": false,
+            "at": 1760530200000
+          },
+          {
+            "w": 40,
+            "r": 10,
+            "sec": null,
+            "done": false,
+            "warmup": false
+          },
+          {
+            "w": 40,
+            "r": 10,
+            "sec": null,
+            "done": false,
+            "warmup": false
+          }
+        ],
+        "step": 2.5
+      },
+      {
+        "id": "1030",
+        "name": "lever pec deck fly",
+        "mode": "reps",
+        "restSec": 75,
+        "last": null,
+        "sets": [
+          {
+            "w": 25,
+            "r": 12,
+            "sec": null,
+            "done": false,
+            "warmup": false
+          },
+          {
+            "w": 25,
+            "r": 12,
+            "sec": null,
+            "done": false,
+            "warmup": false
+          },
+          {
+            "w": 25,
+            "r": 12,
+            "sec": null,
+            "done": false,
+            "warmup": false
+          }
+        ],
+        "step": 2.5
+      },
+      {
+        "id": "2661",
+        "name": "cable seated row with v bar",
+        "mode": "reps",
+        "restSec": null,
+        "last": null,
+        "sets": [
+          {
+            "w": 0,
+            "r": 12,
+            "sec": null,
+            "done": false,
+            "warmup": false
+          },
+          {
+            "w": 0,
+            "r": 12,
+            "sec": null,
+            "done": false,
+            "warmup": false
+          },
+          {
+            "w": 0,
+            "r": 12,
+            "sec": null,
+            "done": false,
+            "warmup": false
+          }
+        ],
+        "step": 5
+      },
+      {
+        "id": "2665",
+        "name": "lever lateral wide pulldown",
+        "mode": "reps",
+        "restSec": null,
+        "last": null,
+        "sets": [
+          {
+            "w": 0,
+            "r": 12,
+            "sec": null,
+            "done": false,
+            "warmup": false
+          },
+          {
+            "w": 0,
+            "r": 12,
+            "sec": null,
+            "done": false,
+            "warmup": false
+          },
+          {
+            "w": 0,
+            "r": 12,
+            "sec": null,
+            "done": false,
+            "warmup": false
+          }
+        ],
+        "step": 5
+      },
+      {
+        "id": "0031",
+        "name": "barbell curl",
+        "mode": "reps",
+        "restSec": null,
+        "last": null,
+        "sets": [
+          {
+            "w": 30,
+            "r": 10,
+            "sec": null,
+            "done": false,
+            "warmup": false
+          },
+          {
+            "w": 30,
+            "r": 10,
+            "sec": null,
+            "done": false,
+            "warmup": false
+          },
+          {
+            "w": 30,
+            "r": 10,
+            "sec": null,
+            "done": false,
+            "warmup": false
+          },
+          {
+            "w": 30,
+            "r": 10,
+            "sec": null,
+            "done": false,
+            "warmup": false
+          }
+        ],
+        "step": 2.5
+      },
+      {
+        "id": "0246",
+        "name": "cable upright row",
+        "mode": "reps",
+        "restSec": null,
+        "last": null,
+        "sets": [
+          {
+            "w": 12,
+            "r": 12,
+            "sec": null,
+            "done": false,
+            "warmup": false
+          },
+          {
+            "w": 12,
+            "r": 12,
+            "sec": null,
+            "done": false,
+            "warmup": false
+          },
+          {
+            "w": 12,
+            "r": 12,
+            "sec": null,
+            "done": false,
+            "warmup": false
+          }
+        ],
+        "step": 2.5
+      },
+      {
+        "id": "3040",
+        "name": "cable bar high pulley overhead tricep extension",
+        "mode": "reps",
+        "restSec": null,
+        "last": null,
+        "sets": [
+          {
+            "w": 0,
+            "r": 15,
+            "sec": null,
+            "done": false,
+            "warmup": false
+          },
+          {
+            "w": 0,
+            "r": 15,
+            "sec": null,
+            "done": false,
+            "warmup": false
+          },
+          {
+            "w": 0,
+            "r": 15,
+            "sec": null,
+            "done": false,
+            "warmup": false
+          }
+        ],
+        "step": 2.5
+      },
+      {
+        "id": "0334",
+        "name": "dumbbell lateral raise",
+        "mode": "reps",
+        "restSec": null,
+        "last": null,
+        "sets": [
+          {
+            "w": 20,
+            "r": 10,
+            "sec": null,
+            "done": false,
+            "warmup": false
+          },
+          {
+            "w": 20,
+            "r": 10,
+            "sec": null,
+            "done": false,
+            "warmup": false
+          },
+          {
+            "w": 20,
+            "r": 10,
+            "sec": null,
+            "done": false,
+            "warmup": false
+          }
+        ],
+        "step": 2.5
+      }
+    ]
+  },
+  "settings": {
+    "health": false,
+    "restHaptics": true,
+    "crown": "reps",
+    "show": {
+      "clip": true,
+      "hr": true,
+      "last": true,
+      "elapsed": false,
+      "kcal": false,
+      "next": true,
+      "rest": "ring"
+    },
+    "lang": "pt",
+    "weighIn": true,
+    "lastBw": 66.6
+  }
+}

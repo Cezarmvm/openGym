@@ -1,0 +1,101 @@
+{
+  "v": 1,
+  "unit": "kg",
+  "restSec": 60,
+  "ready": null,
+  "active": {
+    "id": "w-ss",
+    "name": "Superset",
+    "unit": "kg",
+    "cur": 0,
+    "restSec": 60,
+    "rest": null,
+    "entries": [
+      {
+        "id": "0025",
+        "name": "barbell bench press",
+        "mode": "reps",
+        "restSec": null,
+        "last": null,
+        "sets": [
+          {
+            "w": 12,
+            "r": 10,
+            "sec": null,
+            "done": false,
+            "warmup": false
+          },
+          {
+            "w": 12,
+            "r": 10,
+            "sec": null,
+            "done": false,
+            "warmup": false
+          }
+        ],
+        "group": "a",
+        "step": 2.5
+      },
+      {
+        "id": "0001",
+        "name": "3/4 sit-up",
+        "mode": "reps",
+        "restSec": null,
+        "last": null,
+        "sets": [
+          {
+            "w": 20,
+            "r": 12,
+            "sec": null,
+            "done": false,
+            "warmup": false
+          },
+          {
+            "w": 20,
+            "r": 12,
+            "sec": null,
+            "done": false,
+            "warmup": false
+          }
+        ],
+        "bodyweight": true,
+        "group": "a",
+        "step": 2.5
+      },
+      {
+        "id": "0334",
+        "name": "dumbbell lateral raise",
+        "mode": "reps",
+        "restSec": null,
+        "last": null,
+        "sets": [
+          {
+            "w": 8,
+            "r": 15,
+            "sec": null,
+            "done": false,
+            "warmup": false
+          }
+        ],
+        "step": 2.5
+      }
+    ]
+  },
+  "settings": {
+    "health": false,
+    "restHaptics": true,
+    "crown": "reps",
+    "show": {
+      "clip": true,
+      "hr": true,
+      "last": true,
+      "elapsed": false,
+      "kcal": false,
+      "next": true,
+      "rest": "ring"
+    },
+    "lang": "pt",
+    "weighIn": true,
+    "lastBw": 66.6
+  }
+}

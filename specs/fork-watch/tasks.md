@@ -106,10 +106,11 @@ bloqueado, ela aparece no celular ao abrir o app, sem perda.
   - Req: design §9, D-1, R-5
   - ✅ M2.4 — Kotlin 2.2.20 + compose compiler 2.2.20 + kotlinx-serialization (plugin 2.2.20) no `build.gradle` (3 linhas FORK) com AGP 8.13 / Gradle 8.14.3 do upstream; `./gradlew help` e `:app:assembleSideloadDebug` ok.
 
-- [ ] **M2.5 — Módulo `:watch-core`: modelos + fixtures**
+- [x] **M2.5 — Módulo `:watch-core`: modelos + fixtures**
   - Arquivos: `frontend/android/watch-core/**` (Kotlin/JVM, kotlinx-serialization: `Snapshot`, `ActiveWorkout`, `Entry`, `SetRow`, `Sides`, `Ready`, `ReadySession`, `WatchSettings`, `Event`), `frontend/src/fork/watch-fixtures.test.js` (gera `watch-core/src/test/resources/fixtures/*.json` com o `buildSnapshot`/`fitSnapshot` do upstream)
   - Aceite: fixtures do Treino A real e de superset, por lado, tempo, cardio, aquecimento, `ready` e sem treino. `:watch-core:test` lê todas, ignora um campo desconhecido injetado e trata `v` ≠ 1 como incompatível. O JSON de cada `Event` serializado em Kotlin é aceito pelo `applyEvents` do upstream: o teste vitest lê as fixtures `events/*.json` geradas pelo Kotlin.
   - Req: RS-1.5, RT-2, design §3.2, §3.3, R-3
+  - ✅ M2.5 — `Model.kt` (port do `Model.swift`); fixtures `no-workout`, `treino-a`, `superset`, `per-side-time-cardio` geradas pelo `buildSnapshot`/`fitSnapshot` do upstream (`src/fork/watch-fixtures.test.js`) e lidas pelo `FixturesTest`; `events.json` gerado pelo Kotlin e aceito pelo `applyEvents` do upstream (setDone ×3 + finish). `:watch-core:test` 30/30, vitest 2/2.
 
 - [ ] **M2.6 — Módulo `:fork-wearbridge`: `WatchBridgePlugin`, `EventInbox`, listener**
   - Arquivos: `frontend/android/fork-wearbridge/**` (`WatchBridgePlugin`, `EventInbox`, `PhoneListenerService`, `SnapshotPublisher`, manifest e `res/values/wear.xml`), `fork/android/fork-app.gradle` (dependência), `MainActivity.java` (+1 linha FORK)
@@ -155,10 +156,11 @@ bloqueado, ela aparece no celular ao abrir o app, sem perda.
 Termina com: o treino conduzido inteiro pelo relógio (séries, cargas pelo bezel, superset, lados,
 descanso com vibração, finalizar com resumo), com o celular no bolso.
 
-- [ ] **M3.1 — `SessionCore` (port do upstream) + testes**
+- [x] **M3.1 — `SessionCore` (port do upstream) + testes**
   - Arquivos: `frontend/android/watch-core/src/main/.../SessionCore.kt`, `SessionState.kt`, `src/test/.../SessionCoreTest.kt`, `SetTypesTest.kt`
   - Aceite: `applySnapshot`, `tick`, `markSide`, `skip`, `next(after)`, `setIndex`, `start`, `finish`, `weighIn`, `progress`, `summary` e `beatsBest`, com o mesmo comportamento do Swift. Os casos de `SessionCoreTests.swift` e `SetTypesTests.swift` portados um a um passam. As funções de Apple Health ficam de fora (registrado no cabeçalho do arquivo).
   - Req: RW-1.2, RW-1.3, RW-3.1, RW-4.1, RO-1.4, RO-1.5, RO-1.7, design §5.1
+  - ✅ M3.1 (adiantada junto com o M2.5) — `SessionCore.kt` função a função; `SessionCoreTest` (11, inclui os 9 do Swift), `SetTypesTest` (10) e `SettingsAndWeighInTest` (3) passando.
 
 - [ ] **M3.2 — `SessionStore` completo + `EventSender`**
   - Arquivos: `wear/.../data/SessionStore.kt`, `EventSender.kt`, testes JVM

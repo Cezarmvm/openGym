@@ -1,0 +1,24 @@
+{
+  "v": 1,
+  "unit": "kg",
+  "restSec": 90,
+  "active": null,
+  "ready": null,
+  "settings": {
+    "health": false,
+    "restHaptics": true,
+    "crown": "reps",
+    "show": {
+      "clip": true,
+      "hr": true,
+      "last": true,
+      "elapsed": false,
+      "kcal": false,
+      "next": true,
+      "rest": "ring"
+    },
+    "lang": "pt",
+    "weighIn": true,
+    "lastBw": 66.6
+  }
+}
