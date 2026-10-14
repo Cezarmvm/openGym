@@ -63,7 +63,7 @@ Termina com: APK `com.cezar.opengym` assinado com a chave do dono, instalado no 
   - Aceite: com o celular em depuração USB, registrar `ro.product.model`, `ro.build.version.release`/`sdk` e a versão do One UI (`ro.build.version.oneui`). Isso decide a viabilidade do P2 da Now Bar (D-2).
   - Req: D-2, RB-5
 
-- [ ] **M1.10 — Guia `docs/FORK_INSTALL.md` (parte celular)**
+- [x] **M1.10 — Guia `docs/FORK_INSTALL.md` (parte celular)**
   - Arquivos: `docs/FORK_INSTALL.md`
   - Aceite: em português. Cobre: keystore (criação, backup, `keystore.properties`), exportar o backup JSON do oficial e importar no fork, importar o CSV do Hevy (opcional), fontes desconhecidas, aviso do Play Protect, depuração USB, bateria "Sem restrições" (Samsung) e os erros `INSTALL_FAILED_UPDATE_INCOMPATIBLE`, `INSTALL_FAILED_VERSION_DOWNGRADE` e "app não instalado". As seções do relógio ficam como esqueleto, preenchidas no M2/M3.
   - Req: RB-8.1, design §6 (Samsung)
