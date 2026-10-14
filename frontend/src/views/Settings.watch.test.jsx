@@ -36,6 +36,7 @@ vi.mock('../store/useUI.js', () => {
   return { useUI }
 })
 vi.mock('./WatchSettings.jsx', () => ({ default: () => <div id="watch-page">watch page</div> }))
+vi.mock('../fork/WearSettings.jsx', () => ({ default: () => <div id="wear-page">wear page</div> })) // FORK: the Wear OS page
 vi.mock('../lib/api.js', () => ({ api: vi.fn(), webauthnOK: () => false, passkeyLogin: vi.fn(), passkeyRegister: vi.fn(), IS_ANDROID: false }))
 vi.mock('../lib/push.js', () => ({ pushSupported: () => false, enablePush: vi.fn(), disablePush: vi.fn(), sendTestPush: vi.fn() }))
 vi.mock('../lib/wakelock.js', () => ({ wakeLockSupported: () => false }))
@@ -99,11 +100,12 @@ describe('Settings → Apple Watch', () => {
     expect(host.querySelector('#watch-page')).toBeTruthy()
   })
 
-  it('goes back to the root on Android and on the web', async () => {
+  // FORK (specs/fork-watch): the fork has a Wear OS watch, so Android keeps the page; the web still goes back.
+  it('goes back to the root on the web (FORK: not on Android)', async () => {
     globalThis.Capacitor = { getPlatform: () => 'android' }
     mocks.android = true
     await open('/settings/watch')
-    expect(host.querySelector('#root-page')).toBeTruthy()
+    expect(host.querySelector('#wear-page')).toBeTruthy() // FORK: the Wear OS page
     delete globalThis.Capacitor
     mocks.MOBILE = false
     await open('/settings/watch')

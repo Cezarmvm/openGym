@@ -302,7 +302,8 @@ let pluginP = null
 // Inside an object: a Capacitor plugin proxy answers `then`, so a promise must never resolve with
 // the bare proxy (lib/rest-alert.js, the Coach hang #42).
 const watchPlugin = () => pluginP || (pluginP = (async () => {
-  if (!MOBILE || (await nativePlatform()) !== 'ios') return null
+  const platform = MOBILE ? await nativePlatform() : null
+  if (platform !== 'ios' && platform !== 'android') return null // FORK: the Wear OS watch too (specs/fork-watch R2)
   const { registerPlugin } = await import('@capacitor/core')
   return { WatchBridge: registerPlugin('WatchBridge') }
 })().catch(() => null))

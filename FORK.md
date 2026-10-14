@@ -25,9 +25,12 @@ Toda mudança em arquivo do upstream é marcada com `FORK:` no comentário. Para
 | `frontend/src/lib/import-csv.js` | `parseWhen` aceita "de" entre dia, mês e ano ("4 de mar. de 2026"), formato do Hevy em português/espanhol. Teste: `import-csv.pt-br.test.js` | manter o `(?:de\s+)?` na regex dia-mês-ano |
 | `frontend/src/lib/health-sync.js` | Health Connect recebe só os treinos iniciados depois de ligar a opção (`since` no `opengym-health.json`; filtro em `src/fork/health-since.js`). 3 linhas marcadas | reaplicar `onlySince(...)` no `planSync` do `syncOnce` e o `since` no `enableHealth` |
 | `frontend/src/lib/health-sync.test.js` | relógio dos testes fixado antes dos treinos de exemplo, para manter os casos do upstream | manter as 2 linhas FORK no `beforeEach` |
-| `frontend/android/app/src/main/java/ch/duartesantos/opengym/MainActivity.java` | `registerPlugin(HealthReadPlugin.class)` (fork-health) | manter a linha FORK após os `registerPlugin` do upstream |
+| `frontend/android/app/src/main/java/ch/duartesantos/opengym/MainActivity.java` | `registerPlugin(HealthReadPlugin.class)` (fork-health) e `registerPlugin(WatchBridgePlugin.class)` (fork-watch) | manter as 2 linhas FORK após os `registerPlugin` do upstream |
+| `frontend/src/lib/watch-sync.js` (upstream/watch) | `watchPlugin()` aceita `android` além de `ios`: o JS do relógio do upstream roda no celular Android com o `WatchBridge` do fork (`fork-wearbridge`) | manter a linha FORK no `watchPlugin()` |
+| `frontend/src/views/settings-pages.js` | página `watch` visível no app Android e título "Relógio (Wear OS)" no Android (3 imports + 2 linhas FORK) | manter o getter do título e o `ctx.mobile` no `pageVisible` |
+| `frontend/src/views/Settings.watch.test.jsx` | no Android a página do relógio existe (mock do `WearSettings.jsx` + 1 expectativa) | manter as linhas FORK |
 | `frontend/src/main.jsx` | `initHealthRead()` no MOBILE (fork-health) | manter a linha FORK |
-| `frontend/src/views/Settings.jsx` | import + `<HealthReadCard/>` abaixo do `HealthConnectCard` (fork-health) | manter as 2 linhas FORK |
+| `frontend/src/views/Settings.jsx` | import + `<HealthReadCard/>` abaixo do `HealthConnectCard` (fork-health); import + página `watch` → `<WearSettingsPage/>` no Android (fork-watch) | manter as 4 linhas FORK |
 
 ## Build do fork (Gradle)
 

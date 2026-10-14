@@ -16,4 +16,5 @@ android {
 
 dependencies {
     implementation project(':fork-health')   // specs/fork-health: HealthReadPlugin
+    implementation project(':fork-wearbridge')   // specs/fork-watch: WatchBridge (Wear OS watch link)
 }

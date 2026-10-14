@@ -48,6 +48,7 @@ import { usePasskeys, PasskeysRow, DeviceLinkRow, openDeviceLinkRedeem } from '.
 import { DeleteAccountRow } from '../components/DeleteAccount.jsx'
 import { Section, Row, SelectRow, Switch, Segmented, Button, TextField, SearchField } from '../components/ui.jsx'
 import HealthReadCard from '../fork/HealthReadCard.jsx' // FORK: specs/fork-health
+import WearSettingsPage from '../fork/WearSettings.jsx' // FORK: specs/fork-watch
 import { PAGES, ROOT_GROUPS, pageVisible, searchSettings, pageTrail } from './settings-pages.js'
 import { platformNow } from '../lib/platform-now.js'
 import { pathBefore } from '../lib/nav.js'
@@ -490,7 +491,7 @@ export default function Settings({ page = null, find = null, via = null, entryKe
     })} />
 
   const pages = {
-    watch: () => <WatchSettingsPage />,
+    watch: () => (android ? <WearSettingsPage S={S} /> : <WatchSettingsPage />), // FORK: the Wear OS watch on Android (specs/fork-watch)
     workout: () => <>
       <Section title={t('Rest')} footer={t('Each exercise can have its own rest too. Set it in the exercise settings of a routine.')}>
         {restRow}

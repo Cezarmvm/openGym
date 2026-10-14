@@ -34,6 +34,7 @@ public class MainActivity extends BridgeActivity {
         registerPlugin(AnimationPacksPlugin.class);
         registerPlugin(NudgeCheckPlugin.class);
         registerPlugin(com.cezar.opengym.forkhealth.HealthReadPlugin.class); // FORK: specs/fork-health
+        registerPlugin(com.cezar.opengym.wearbridge.WatchBridgePlugin.class); // FORK: specs/fork-watch
         super.onCreate(savedInstanceState);
         passSystemBarsToPage();
     }

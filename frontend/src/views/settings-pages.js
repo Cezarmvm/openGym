@@ -7,6 +7,9 @@
 // and checks that each entry below really is a row there.
 import { t } from '../lib/i18n.js'
 import { ACCENT_NAMES } from '../lib/format.js'
+import { platformNow } from '../lib/platform-now.js' // FORK: Wear OS watch page title
+import { getLang } from '../lib/i18n.js' // FORK: Wear OS watch page title
+import { ft } from '../fork/strings.js' // FORK: Wear OS watch page title
 
 export const PAGES = {
   workout: { title: 'Workout', icon: 'play', tint: 'var(--green)' },
@@ -17,7 +20,7 @@ export const PAGES = {
   equipment: { title: 'Equipment', icon: 'kettlebell', tint: 'var(--indigo)' },
   look: { title: 'Look & Home', icon: 'palette', tint: 'var(--purple)' },
   coach: { title: 'AI Coach', icon: 'sparkles', tint: 'var(--green)' },
-  watch: { title: 'Apple Watch', icon: 'watch', tint: 'var(--grey)' },
+  watch: { get title() { return platformNow() === 'android' ? ft('Watch (Wear OS)', getLang()) : 'Apple Watch' }, icon: 'watch', tint: 'var(--grey)' }, // FORK: Wear OS title on Android
   data: { title: 'Data & backup', icon: 'folder', tint: 'var(--blue)' },
   about: { title: 'About & updates', icon: 'info', tint: 'var(--grey)' },
   account: { title: 'Account', icon: 'personCircle', tint: 'var(--grey)' },
@@ -37,7 +40,7 @@ export function pageVisible(page, ctx) {
   if (page === 'reminders') return !!(ctx.user || ctx.mobile)
   if (page === 'coach') return !!ctx.mobile
   // The iPhone app only: the watch app ships inside it.
-  if (page === 'watch') return !!ctx.ios
+  if (page === 'watch') return !!(ctx.ios || ctx.mobile) // FORK: the Wear OS watch page on Android too (specs/fork-watch)
   return page in PAGES
 }
 

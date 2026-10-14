@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- FORK (specs/fork-watch R2): merged into the phone app. No dangerous permission. -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application>
+        <!-- Woken by Play services when the watch sends an event, even with the app not running:
+             each event is written to the inbox before anything else (design §2.3). -->
+        <service
+            android:name="com.cezar.opengym.wearbridge.PhoneListenerService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.DATA_CHANGED" />
+                <data android:scheme="wear" android:host="*" android:pathPrefix="/opengym/v1/event" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="com.google.android.gms.wearable.CAPABILITY_CHANGED" />
+                <data android:scheme="wear" android:host="*" android:path="/opengym_watch" />
+            </intent-filter>
+        </service>
+    </application>
+</manifest>
