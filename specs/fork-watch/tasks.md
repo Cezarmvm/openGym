@@ -142,7 +142,7 @@ bloqueado, ela aparece no celular ao abrir o app, sem perda.
   - Req: RB-6.1 (2–6), RS-1.6
   - ✅ M2.9 — `1.4.1-cezar.7` (26007): celular e relógio com o mesmo certificado (`70:F8:…:BF:D2`), pacote e versionCode conferidos pelo `aapt2`, instalados por `--install --phone … --watch …`; cópia do APK do relógio reassinada com a keystore descartável → certificado diferente (`00ae29…`), que a etapa "signature check" recusa. O script roda vitest (fork + relógio do upstream) e `:watch-core:test :fork-wearbridge:testDebugUnitTest`.
 
-- [ ] **M2.10 — Checklist manual M2**
+- [x] **M2.10 — Checklist manual M2**
   - **Checklist (o dono):**
     1. Instalar celular + relógio pelo script (`--install`).
     2. Iniciar o Treino A no celular → o app mínimo do relógio mostra exercício e série.
@@ -150,6 +150,14 @@ bloqueado, ela aparece no celular ao abrir o app, sem perda.
     4. Matar o app do celular (recentes), tocar "Concluir" no relógio, reabrir o celular → a série aparece.
     5. Upgrade N → N+1 dos dois sem perda.
   - Req: RS-1.1, RS-2.1, RB-7, RT-4
+  - ✅ M2.10 (feito pelo assistente via adb, com o dono desbloqueando os aparelhos), 2026-10-14:
+    1. `cezar.7` instalado nos dois pelo script.
+    2. Treino A iniciado no celular → o relógio mostrou o exercício e a série.
+    3. Celular bloqueado → 3× "Concluir" → 3 eventos na inbox em ~1,5 s cada → ao desbloquear: 3/24 séries + descanso rodando.
+    4. App do celular morto (`am kill`) → "Concluir" → o Play Services acordou o listener e guardou o evento → ao reabrir: 1/24 + descanso.
+    5. `cezar.7` → `cezar.8` nos dois: 23 treinos e pesagens preservados.
+
+    Os treinos de teste foram descartados (o histórico continua com 23). Observação para o M3: os textos do relógio seguem o idioma do relógio (inglês); o `settings.lang` do snapshot passa a mandar no M3.3.
 
 **🛑 PARE — fim do M2. Aguardar confirmação do dono.**
 
