@@ -30,3 +30,9 @@ frontend/bundle-size.json
 
 # Local planning notes
 docs/superpowers/plans/
+
+# FORK: release signing secrets and fork build output — never commit (specs/fork-watch, RB-2.4)
+fork/keystore.properties
+*.jks
+*.keystore
+dist-apk/
