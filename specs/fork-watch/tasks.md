@@ -48,7 +48,7 @@ Termina com: APK `com.cezar.opengym` assinado com a chave do dono, instalado no 
   - Aceite: o assistente mostra o comando `keytool` exato (design §9.2) e espera. O dono roda e preenche `fork/keystore.properties` a partir do `.example`. O assistente confere `git status` (nada novo rastreado) e `keytool -list` (alias certo). O assistente lembra do **backup da keystore e das senhas** (cópia fora do PC, ex.: pendrive + gerenciador de senhas).
   - Req: RB-2.4, RB-2.5
 
-- [ ] **M1.7 — Verificador de atualização do fork**
+- [x] **M1.7 — Verificador de atualização do fork**
   - Arquivos: `frontend/src/lib/update.js` (1 linha FORK), `FORK.md`
   - Aceite: `REPO = 'Cezarmvm/openGym'`. Um teste vitest novo (`frontend/src/watch/fork-update.test.js`) confirma que `LATEST_URL` aponta para o fork. A suíte do upstream continua com o mesmo resultado de antes (5054/5055 e as mesmas 2 falhas conhecidas).
   - Req: RB-4.1, RB-4.2, D-3
